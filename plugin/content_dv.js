@@ -39,10 +39,10 @@
         var requesterString = "&requesterName="+requester.name+"&requesterIcon="+requester.icon;
         
 		var targetUrl = "http://www.showmefirst.info/permissions.html"+permString+requesterString;
-		//alert(targetUrl);
-		window.open(targetUrl);
+
+//		window.open(targetUrl);
             
-    };
+    }
     
     function getUrlVar(name){
         return unescape(getUrlVars()[name]);

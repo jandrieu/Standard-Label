@@ -1,0 +1,109 @@
+.content {
+
+    width: 600px;
+    left: 50%;
+    position:absolute;
+    margin-left: -300px;
+
+}
+
+.subscription_form {
+
+    width:400px;
+}
+
+.submit {
+    display:block;
+    text-align:right;
+}
+
+.label_box {
+    display:inline-block;
+}
+
+.label_icon {
+    display:inline-block;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 3px;
+    margin: 10px;
+}
+
+.submit_button_box {
+    display:inline-block;
+    padding: 3px;
+    margin: 10px;
+}
+
+
+.hide {
+    display: none !important;
+}
+
+div.standard_label {
+
+    position:absolute;
+    top:50%;
+    left:50%;
+    width: 500px;
+    height: auto;
+    margin-left: -250px;
+    margin-top:-310px;
+    background-color: white;
+    z-index:100;
+    padding: 30px;
+    border: thin black solid;
+    text-align: center;
+    font-family:arial;
+
+
+}
+
+div.standard_label  h1,
+div.standard_label  h2,
+div.standard_label  h3,
+div.standard_label  h4,
+div.standard_label  h5,
+div.standard_label  h6{
+    margin:0;
+}
+
+table.terms {
+    /*border-collapse: collapse;*/
+    /*border-top: thin black solid;*/
+    border: 1px solid black;
+}
+
+.odd {
+    background-color: #def;
+}
+
+.odd td {
+    border-bottom: 1px solid #cef;
+}
+
+td {
+    padding: 5px;
+
+}
+
+td.left {
+    text-align:right;
+    font-weight:bold;
+    border-right: thin solid #6187ff;
+    width: 200px;
+}
+
+td.right{
+    text-align:left;
+    font-weight:normal;
+}
+
+#test_tooltip{
+    position: relative;
+    top:100px;
+}
+
+
+
