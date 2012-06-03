@@ -9,5 +9,5 @@
   },
   "background": {
     "scripts": ["background.js"]},
-    "permissions": ["tabs"]
+    "permissions": ["tabs", "http://www.facebook.com/", "https://www.facebook.com/"]
 }
