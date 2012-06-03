@@ -1,0 +1,68 @@
+h1, h2, h3 {
+	font-family: arial;
+}
+
+h1 {
+	text-align: center;
+}
+div#content {
+	position:absolute;
+	width: 500px;
+	left: 50%;
+	margin-left: -250px;
+}
+	
+#dashboard {
+	width:100%;
+	position:relative;
+	height: 100px;
+}
+#score_box {
+	position:absolute;
+	left: 25%;
+	top: 50%;
+	margin-top: -25px;
+	font-weight:bold;
+	font-size 50px;
+	display:inline-block;
+	vertical-align: center;
+
+}
+
+#score_title {
+	display:inline-block;
+}
+
+#score_value {
+	color: red;
+	display:inline-block;
+}
+
+#score_gauge {
+	position:absolute;
+	right: 10%;
+	width: 100px;
+	float:right;
+}
+
+#dashboard
+
+
+
+
+table#risk_factors {
+	border: thick black solid;
+	padding: 5px;
+	border-collapse: collapse;
+	margin-top: 10px;
+}
+
+table#risk_factors td,
+table#risk_factors th {
+	padding: 5px;
+	border: thin gray solid;
+}
+	
+td.col2, td.col3 {
+	text-align: center;
+}

@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>ShareTrack Risk Profile</title>
+	<link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<link href="css/sharetrack.css" rel="stylesheet" type="text/css"/>
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+  
+	<script>
+		$(document).ready(function() {
+			$("#observation_start_date").datepicker();
+			$("#observation_end_date").datepicker();
+		});
+	</script>
+
+</head>
+<link type="text/css" rel="stylesheet" href="sharetrack.css"/>
+<body>
+<script type="text/javascript" src="sharetrack.js"></script>
+<div id="content">
+	<h1>ShareTrack Risk Profile</h1>
+	<div id="dashboard">
+		<div id="score_box"><span id="score_title">Risk Score:</span> <span id="score_value">780 HIGH</span></div>
+		<img id="score_gauge" src="images/gauge.jpg"/>
+	</div>
+	<h2>Risk Factors</h2>
+	<div id="risk_factor_heading">
+		<span class="observation_range">Observation Range</span> 
+		<input id="observation_start_date"  class="date_picker" type="text" value="2012-05-04"/>
+		<input id="observation_end_date" class="date_picker" type="text" value="2012-06-03"/>
+	</div>
+	<table id="risk_factors">
+		<tr class="first_row"><th class="col1">	Website	</th>	<th class="col2">	Visits	</th>	<th class="col3">	Risk Score	</th>	<th class="col4">	Basis	</th></tr>
+		<tr><td class="col1">	yahoo.com	</td>	<td class="col2">	75	</td>	<td class="col3">	500	</td>	<td class="col4">	Malware Attack	</td></tr>
+		<tr><td class="col1">	twitter.com	</td>	<td class="col2">	456	</td>	<td class="col3">	850	</td>	<td class="col4">	Public Exposure	</td></tr>
+		<tr><td class="col1">	facebook.com	</td>	<td class="col2">	600	</td>	<td class="col3">	900	</td>	<td class="col4">	Public Exposure	</td></tr>
+		<tr><td class="col1">	example.com	</td>	<td class="col2">	900	</td>	<td class="col3">	1000	</td>	<td class="col4">	Data Compromise	</td></tr>
+		<tr><td class="col1">	google.com	</td>	<td class="col2">	1000	</td>	<td class="col3">	350	</td>	<td class="col4">	Behavioral Targeting	</td></tr>
+		<tr><td class="col1">	jquery.com	</td>	<td class="col2">	15	</td>	<td class="col3">	0	</td>	<td class="col4">		</td></tr>
+		<tr><td class="col1">	fastmail.com	</td>	<td class="col2">	2344	</td>	<td class="col3">	100	</td>	<td class="col4">	Communications Risk	</td></tr>
+		<tr><td class="col1">	flickr.com	</td>	<td class="col2">	23	</td>	<td class="col3">	200	</td>	<td class="col4">	Public Exposure	</td></tr>
+		<tr><td class="col1">	github.com	</td>	<td class="col2">	15	</td>	<td class="col3">	0	</td>	<td class="col4">		</td></tr>
+		<tr><td class="col1">	disconnect.me	</td>	<td class="col2">	4	</td>	<td class="col3">	0	</td>	<td class="col4">		</td></tr>
+		<tr><td class="col1">	wiki.mozilla.com	</td>	<td class="col2">	3	</td>	<td class="col3">	0	</td>	<td class="col4">		</td></tr>
+		<tr><td class="col1">	isharedwhat.com	</td>	<td class="col2">	5	</td>	<td class="col3">	0	</td>	<td class="col4">		</td></tr>
+		<tr><td class="col1">	delicious.com	</td>	<td class="col2">	8	</td>	<td class="col3">	400	</td>	<td class="col4">	Public Exposure	</td></tr>
+		<tr><td class="col1">	gotomeeting.com	</td>	<td class="col2">	3	</td>	<td class="col3">	200	</td>	<td class="col4">	Network Risk	</td></tr>
+		<tr><td class="col1">	opinionlab.com	</td>	<td class="col2">	1	</td>	<td class="col3">	0	</td>	<td class="col4">		</td></tr>
+	</table>
+</div>
+</body>
+</html>
