@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     $('#submitButton').mouseover(function(){
         console.log('hi')
-    })
+    });
 
-
+    $('.btn').popover()
 });

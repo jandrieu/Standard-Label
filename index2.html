@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>The Standard Information Sharing Label</title>
-    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="css/standardLabel.css" />
 </head>
 <body>
@@ -88,13 +88,12 @@
 
                 <div id = 'submitButton' class="submit_button_box"><input type="submit" value="Submit" class="processing" /></div>
             </div>
-            <a href="#" rel="tooltip" title="first tooltip">hover over me</a>
+
+            <a href="#" class="btn btn-danger" rel="popover" data-content="Click to see more of what you're sharing" data-original-title="The Standard Label">hover for popover</a>
+
             <p style="font-size:10px;font-family:Verdana,Arial,sans-serif;"><a href="http://dadamailproject.com" target="_blank" style="font-size:10px;font-family:Verdana,Arial,sans-serif;">Powered by Dada Mail 5.0.1 Mailing List Manager</a></p>
 
-
-
-
-
+            <!--var streamNav = $('<div id = "stream_view" title = "Click to watch comments stream in"><p>Stream</p></div>');-->
 
 
 
@@ -107,6 +106,7 @@
 
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/tipsy.js"></script>
+<script type="text/javascript" src="js/popover.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 
 </html>
