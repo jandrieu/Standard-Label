@@ -2,11 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="322b76a2-b0cc-4378-a3ef-c195c632ee27" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/popover.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/standardLabel.css" afterPath="$PROJECT_DIR$/css/standardLabel.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index2.html" afterPath="$PROJECT_DIR$/index2.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/script.js" afterPath="$PROJECT_DIR$/js/script.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/label.html" afterPath="$PROJECT_DIR$/label.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin/background.js" afterPath="$PROJECT_DIR$/plugin/background.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin/content_dv.js" afterPath="$PROJECT_DIR$/plugin/content_dv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin/dv.js" afterPath="$PROJECT_DIR$/plugin/dv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin/manifest.json" afterPath="$PROJECT_DIR$/plugin/manifest.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin/popover.js" afterPath="$PROJECT_DIR$/plugin/popover.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin/popup.js" afterPath="$PROJECT_DIR$/plugin/popup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin/standardLabel.css" afterPath="$PROJECT_DIR$/plugin/standardLabel.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rawlabel.html" afterPath="$PROJECT_DIR$/rawlabel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sharetrack.html" afterPath="$PROJECT_DIR$/sharetrack.html" />
     </list>
     <ignored path="Standard-Label.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,73 +36,100 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="label.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/label.html">
+      <file leaf-file-name="manifest.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugin/manifest.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="0" selection-start="2976" selection-end="3036" vertical-scroll-proportion="0.0">
+            <state line="6" column="46" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index2.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index2.html">
+      <file leaf-file-name="dv.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/plugin/dv.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="24" selection-start="5232" selection-end="5254" vertical-scroll-proportion="0.0">
+            <state line="47" column="36" selection-start="3640" selection-end="3640" vertical-scroll-proportion="1.6068376">
+              <folding>
+                <marker date="1338766839000" expanded="true" signature="95:3054" placeholder="..." />
+                <marker date="1338766839000" expanded="true" signature="95:1020" placeholder="..." />
+                <marker date="1338766839000" expanded="true" signature="95:1013" placeholder="..." />
+                <marker date="1338766839000" expanded="true" signature="281:2856" placeholder="..." />
+                <marker date="1338766839000" expanded="true" signature="281:1020" placeholder="..." />
+                <marker date="1338766839000" expanded="true" signature="281:1013" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sharetrack.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sharetrack.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="23" selection-start="608" selection-end="608" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="background.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugin/background.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="popup.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugin/popup.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="7" selection-start="502" selection-end="502" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="popover.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/popover.js">
+        <entry file="file://$PROJECT_DIR$/plugin/popover.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="17" selection-start="3128" selection-end="3128" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="18" column="0" selection-start="873" selection-end="873" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tipsy.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/tipsy.js">
+      <file leaf-file-name="content_dv.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugin/content_dv.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="274" column="17" selection-start="8977" selection-end="8977" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="standardLabel.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/standardLabel.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="13" selection-start="1391" selection-end="1391" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jquery.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/jquery.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9265" column="13" selection-start="349084" selection-end="349084" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="script.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/script.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="3" selection-start="171" selection-end="171" vertical-scroll-proportion="0.21276596">
+            <state line="43" column="12" selection-start="1291" selection-end="1291" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="bootstrap.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/bootstrap.css">
+        <entry file="file://$PROJECT_DIR$/plugin/bootstrap.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4982" column="1" selection-start="102860" selection-end="102860" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="background.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugin/background.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="9" selection-start="866" selection-end="866" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="popup.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugin/popup.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="0" selection-start="225" selection-end="225" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -113,14 +148,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/js/jquery.js" />
-        <option value="$PROJECT_DIR$/js/tipsy.js" />
-        <option value="$PROJECT_DIR$/css/bootstrap.css" />
-        <option value="$PROJECT_DIR$/css/standardLabel.css" />
         <option value="$PROJECT_DIR$/js/popover.js" />
         <option value="$PROJECT_DIR$/label.html" />
-        <option value="$PROJECT_DIR$/index2.html" />
+        <option value="$PROJECT_DIR$/rawlabel.html" />
         <option value="$PROJECT_DIR$/js/script.js" />
+        <option value="$PROJECT_DIR$/css/standardLabel.css" />
+        <option value="$PROJECT_DIR$/plugin/popup.js" />
+        <option value="$PROJECT_DIR$/plugin/popover.js" />
+        <option value="$PROJECT_DIR$/index2.html" />
+        <option value="$PROJECT_DIR$/plugin/content.js" />
+        <option value="$PROJECT_DIR$/plugin/test.css" />
+        <option value="$PROJECT_DIR$/plugin/standardLabel.css" />
+        <option value="$PROJECT_DIR$/plugin/manifest.json" />
+        <option value="$PROJECT_DIR$/sharetrack.html" />
+        <option value="$PROJECT_DIR$/plugin/content_dv.js" />
+        <option value="$PROJECT_DIR$/plugin/background.js" />
+        <option value="$PROJECT_DIR$/plugin/dv.js" />
       </list>
     </option>
   </component>
@@ -128,7 +171,7 @@
     <option name="x" value="18" />
     <option name="y" value="22" />
     <option name="width" value="1415" />
-    <option name="height" value="874" />
+    <option name="height" value="746" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -194,6 +237,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Standard-Label" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Standard-Label" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -229,6 +286,11 @@
         </serverdata>
       </server>
     </servers>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/plugin" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
@@ -273,14 +335,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="18" y="22" width="1415" height="874" extended-state="0" />
+    <frame x="18" y="22" width="1415" height="746" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26077428" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15266618" sideWeight="0.6706507" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -290,7 +353,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -353,49 +415,124 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/label.html">
+    <entry file="file://$PROJECT_DIR$/plugin/content_script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="0" selection-start="2976" selection-end="3036" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/popover.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="17" selection-start="3128" selection-end="3128" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/standardLabel.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="13" selection-start="1391" selection-end="1391" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/jquery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9265" column="13" selection-start="349084" selection-end="349084" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/bootstrap.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4982" column="1" selection-start="102860" selection-end="102860" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="24" selection-start="5232" selection-end="5254" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/tipsy.js">
+    <entry file="file://$PROJECT_DIR$/plugin/test.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="274" column="17" selection-start="8977" selection-end="8977" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/script.js">
+    <entry file="file://$PROJECT_DIR$/index2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="3" selection-start="171" selection-end="171" vertical-scroll-proportion="0.21276596">
+        <state line="4" column="23" selection-start="96" selection-end="96" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/standardLabel.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="17" selection-start="1007" selection-end="1007" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/tipsy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/bootstrap.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/background.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/popover.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="0" selection-start="873" selection-end="873" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/popup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="225" selection-end="225" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/popup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="7" selection-start="502" selection-end="502" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/manifest.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="46" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sharetrack.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="23" selection-start="608" selection-end="608" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/content_dv.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="12" selection-start="1291" selection-end="1291" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/background.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="9" selection-start="866" selection-end="866" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/dv.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="36" selection-start="3640" selection-end="3640" vertical-scroll-proportion="1.6068376">
+          <folding>
+            <marker date="1338766839000" expanded="true" signature="95:3054" placeholder="..." />
+            <marker date="1338766839000" expanded="true" signature="95:1020" placeholder="..." />
+            <marker date="1338766839000" expanded="true" signature="95:1013" placeholder="..." />
+            <marker date="1338766839000" expanded="true" signature="281:2856" placeholder="..." />
+            <marker date="1338766839000" expanded="true" signature="281:1020" placeholder="..." />
+            <marker date="1338766839000" expanded="true" signature="281:1013" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

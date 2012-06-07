@@ -40,7 +40,7 @@
         
 		var targetUrl = "http://www.showmefirst.info/permissions.html"+permString+requesterString;
 
-//		window.open(targetUrl);
+		window.open(targetUrl);
             
     }
     

@@ -60,13 +60,18 @@ div.standard_label {
 
 }
 
-div.standard_label  h1,
+
 div.standard_label  h2,
 div.standard_label  h3,
 div.standard_label  h4,
 div.standard_label  h5,
 div.standard_label  h6{
     margin:0;
+}
+
+div.standard_label  h1{
+    margin: 0;
+    font-size: 20px;
 }
 
 table.terms {

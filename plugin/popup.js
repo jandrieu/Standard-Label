@@ -5,6 +5,5 @@
 window.onload = showPhotos();
 
 function showPhotos() {
-    alert('hello');
-}
 
+}
