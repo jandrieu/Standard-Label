@@ -4,7 +4,7 @@ function rNewTab(tabId, changeInfo, tab)
 {
 	if (changeInfo.status == 'complete') 
 	{
-		//alert(tab.url);
+		console.log(tab.url);
 	
 		if (tab.url.split('oauth').length > 1)
 		{
