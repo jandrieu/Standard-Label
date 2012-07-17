@@ -1,29 +1,5 @@
 if(typeof standardLabel == "undefined")
-	var standardLabel = {};
-
-
-standardLabel.activeHtml = "active.html";
-standardLabel.defaultHtml = "default.html";
-
-standardLabel.tabUpdate = function(tabId, changeInfo, tab) {
-	console.log("tabupdate change info: "+JSON.stringify(changeInfo));
-	console.log("tabupdate tab info: "+JSON.stringify(tab));
-	var data;
-	switch(changeInfo.status) {
-	   case "complete" : 
-	        data = standardLabel.setIcon(tab.url,tab.windowId,tabId);
-	        break;
-	    case "loading" :
-	        break;
-	    default: 
-	        console.log("unknown changeInfo status in standardLabelTabUpdate");
-	}
-	if(data) {
-		standardLabel.setPopupHtml("active",tabId,data);
-	} else {
-		standardLabel.setPopupHtml("default",tabId,data);
-	}
-}
+	var standardLabel = {}; // create the empty 2d array for window/tab ids
 
 standardLabel.tabActivate = function(activeInfo) {
 	console.log("tabActivate activeInfo: "+JSON.stringify(activeInfo));
@@ -33,47 +9,43 @@ standardLabel.tabHighlight = function(highlightInfo) {
 	console.log("tabActivate highlightInfo: "+JSON.stringify(highlightInfo));
 }
 
-standardLabel.setIcon = function(url,windowId,tabId) {
-	var OAuth = standardLabel.checkOAuth(url)
-	if(OAuth) {
-		chrome.browserAction.setIcon({path: "images/active.19x19.png", "tabId":tabId});
-		return OAuth;
-	} else {
-		chrome.browserAction.setIcon({path: "images/default.19x19.png", "tabId":tabId});
-	}
-	return undefined;
-}
 
-standardLabel.setPopupHtml = function(popupName,tabId,data) {
-	
-	var url;
-	switch(popupName) {
-		case "default" :
-			url=standardLabel.defaultHtml;
-			break;
-		case "active" :
-			url=standardLabel.activeHtml;
-			break;
-		default:
-			console.log("error: unknown popupName in standardLabel.setPopupHtml()");
-			return;
+standardLabel.getWindow = function(windowId)  {
+	if(windowId in standardLabel.windows) {
+		return standardLabel.windows[windowId];
+	} else {
+		var newWindow = {"window":windowId,	"tabs":[]};
+		standardLabel.windows.push(newWindow);
+		return newWindow;
 	}
-	if(data)
-		url+= "?data="+encodeURIComponent(JSON.stringify(data));
-		
-	chrome.browserAction.setPopup({"tabId":tabId,"popup":url});
 }
 
 standardLabel.setTabStatus = function(url,windowId,tabId) {
-    console.log("setTabStatus: "+windowId);
-	if(typeof standardLabel.tabs[windowId] == "undefined")
-		standardLabel.tabs[windowId] = [];
+	console.log("setTabStatus: "+windowId + " " + tabId);
+	
+	var myWindow = standardLabel.getWindow(windowId);
+		   
+	if(tabId in myWindow.tabs) {
+		standardLabel.clearTab(myWindow,tabId);
+	}
 		
-	standardLabel.stopAnimation(windowId,tabId);
-	standardLabel.tabs[windowId][tabId] = "default";
+	standardLabel.tabs[windowId][tabId] = {
+		status : "default"
+	}
+
 	var OAuth = standardLabel.checkOAuth(url)
+	if(OAuth) {
+		standardLabel.tabs[windowId][tabId].status="active";
+		standardLabel.tabs[windowId][tabId].type= "OAuth";
+		standardLabel.tabs[windowId][tabId].data= OAuth;
+	}
 }
  
+standardLabel.clearTab = function(windowId,tabId) {
+	clearAnimation(windowId,tabId);
+	
+};
+
 standardLabel.showStatus = function(windowId,tabId) {
 	
     console.log("showStatus: "+windowId);
@@ -111,6 +83,17 @@ standardLabel.drawStatus = function(windowId,tabId) {
 	}
 }
 
+standardLabel.addAnimation = function(windowId,tabId) {
+	console.log("adding animation:"+windowId+" "+tabId);
+	if(windowId in standardLabel.animationTimers) {
+		var idx = standardLabel.animationTimers.indexOf(windowId);
+		standardLabel.animationTimers[idx].tabs.push(tabId);
+	} else {
+		standardLabel.animationTimers.push[windowId].timer = setInterval(function(){doAnimation(windowId,tabId);}, standardLabel.animationInterval);
+		standardLabel.animationTimers[windowId].tabs = [];
+		standardLabel.animationTimers[windowId].tabs.push(tabId);
+	}
+}
 //standardLabel.newTab = function (tabId, changeInfo, tab) 
 //{
 //	if (changeInfo.status == 'complete') 
@@ -134,6 +117,23 @@ standardLabel.drawStatus = function(windowId,tabId) {
 //	}
 //	//alert('called ' + JSON.stringify(changeInfo) + JSON.stringify(tab));
 //}
+standardLabel.removeAnimation = function(windowId,tabId) {
+	if(windowId in standardLabel.animationTimers) {
+		if(tabId in standardLabel.animationTimers[windowId].tabs) {
+			console.log("removing animation:"+windowId+" "+tabId);
+			var idx = standardLabel.animationTimers[windowId].tabs.indexOf(tabId);
+			standardLabel.animationTimers[windowId].tabs.splice(idx, 1);
+			if(standardLabel.animationTimers[windowId].tabs.length=0) { // last tab, kill the timer
+				clearInterval(standardLabel.animationTimers[windowId].timer);
+				idx = standardLabel.animationTimers.indexOf(windowId);
+			}
+		} else {
+			console.log("can't find tab "+tabId+" to remove in standardLabel.removeAnimation");
+		}
+	} else {
+		console.log("can't find window "+windowId+" to remove in standardLabel.removeAnimation");
+	}
+}}
 
 standardLabel.animationNumber = 6;
 standardLabel.animationInterval = 166;
@@ -318,3 +318,4 @@ chrome.tabs.onUpdated.addListener(standardLabel.tabUpdate);
 chrome.tabs.onHighlighted.addListener(standardLabel.tabHighlight);
 
 
+										 

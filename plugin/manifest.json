@@ -9,8 +9,8 @@
       "js" : ["jquery-1.7.2.min.js", "tipsy.js","popover.js","standardLabel.js"]
   }],
   "browser_action": {
-    "default_popup": "popup.html",
-    "default_icon": "images/active.19x19.gif",     // optional
+    "default_popup": "default.html",
+    "default_icon": "images/default.19x19.png",     // optional
     "default_title": "Standard Label"      // optional; shown in tooltip
   },
   "background": {
