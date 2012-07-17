@@ -1,29 +1,133 @@
 if(typeof standardLabel == "undefined")
-	var standardLabel = {};
+	var standardLabel = {tabs: [[]],
+						 windowStatus: []}; // create the empty 2d array for window/tab ids
 
-standardLabel.newTab = function (tabId, changeInfo, tab) 
-{
-	if (changeInfo.status == 'complete') 
-	{
-		console.log(tab.url);
-		console.log("checkOAuth: "+JSON.stringify(standardLabel.checkOAuth(tab.url)));
-															
-		if (tab.url.split('oauth').length > 1)
-		{
-		    
-		    var appName = tab.url.split('apps.facebook.com%2F')[1].split('%2F')[0];		    
-		    var actions = tab.url.split('scope=').pop();
-		    //alert(appName + " ; " + actions);
-//            chrome.tabs.insertCSS(tabId, {file: "test.css"});
-//            chrome.tabs.insertCSS(tabId, {file: "bootstrap.css"});
-//            chrome.tabs.insertCSS(tabId, {file: "standardLabel.css"});
-//		    chrome.tabs.executeScript(tabId, {file: "jquery-1.7.2.min.js"});
-//            chrome.tabs.executeScript(tabId, {file: "popover.js"});
-//            chrome.tabs.executeScript(tabId, {file: "dv.js"});
-//		    chrome.tabs.executeScript(tabId, {file: "content_dv.js"});
-		}
+standardLabel.tabUpdate = function(tabId, changeInfo, tab) {
+	console.log("tabupdate change info: "+JSON.stringify(changeInfo));
+	console.log("tabupdate tab info: "+JSON.stringify(tab));
+	switch(changeInfo.status) {
+	   case "complete" : 
+	        standardLabel.setTabStatus(tab.url,tab.windowId,tabId);
+			standardLabel.showStatus(tab.windowId,tabId);
+	        break;
+	    case "loading" :
+	        break;
+	    default: 
+	        console.log("unknown changeInfo status in standardLabelTabUpdate");
 	}
-	//alert('called ' + JSON.stringify(changeInfo) + JSON.stringify(tab));
+}
+
+standardLabel.tabActivate = function(activeInfo) {
+	console.log("tabActivate activeInfo: "+JSON.stringify(activeInfo));
+}
+
+standardLabel.tabHighlight = function(highlightInfo) {
+	console.log("tabActivate highlightInfo: "+JSON.stringify(highlightInfo));
+}
+
+standardLabel.setTabStatus = function(url,windowId,tabId) {
+    console.log("setTabStatus: "+windowId);
+	if(typeof standardLabel.tabs[windowId] == "undefined")
+		standardLabel.tabs[windowId] = [];
+		
+	standardLabel.stopAnimation(windowId,tabId);
+	standardLabel.tabs[windowId][tabId] = "default";
+	var OAuth = standardLabel.checkOAuth(url)
+	if(OAuth) {
+		standardLabel.tabs[windowId][tabId] = {"type" : "OAuth",
+												"data" : OAuth};
+	}
+}
+ 
+standardLabel.showStatus = function(windowId,tabId) {
+	
+    console.log("showStatus: "+windowId);
+
+    if(windowId in standardLabel.tabs) {
+        if(tabId in standardLabel.tabs[windowId]) {
+            var status = standardLabel.tabs[windowId][tabId];
+            standardLabel.windowStatus[windowId]={"status":status,"tabId":tabId};
+        } else {
+			standardLabel.windowStatus[windowId]="default";
+		}
+    }
+    standardLabel.drawStatus(windowId,tabId); // this will paint the icon and start animation timer if necessary (for the window)
+        
+	return;
+}
+
+standardLabel.drawStatus = function(windowId,tabId) {
+    console.log("drawStatus: "+windowId);
+
+	var status=standardLabel.windowStatus[windowId];
+	if(typeof status=="undefined" || status.status == "default") {
+			console.log("setting default animation");
+			standardLabel.stopAnimation(windowId,tabId);
+	} else if ("type" in status.status){
+		switch (status.status.type) {
+			case "OAuth":
+				standardLabel.animate(windowId,tabId);
+				break;
+			default:
+				console.log("unknown status type in standardLabel.drawStatus: "+JSON.stringify(status));
+		}
+	} else {
+		console.log("unknown status in standardLabel.drawStatus: "+JSON.stringify(status));
+	}
+}
+
+//standardLabel.newTab = function (tabId, changeInfo, tab) 
+//{
+//	if (changeInfo.status == 'complete') 
+//	{
+//		var OAuth = standardLabel.checkOAuth(tab.url)
+////		console.log(tab.url);
+////		console.log("checkOAuth: "+JSON.stringify(standardLabel.checkOAuth(tab.url)));
+////		chrome.browserAction.setIcon({path: "images/icon.png"})
+//
+//		if(OAuth) {
+//			standardLabel.animate();			
+//		} else {
+//			standardLabel.stopAnimation();
+//		}
+//		if (tab.url.split('oauth').length > 1)
+//		{
+//		    
+//		    var appName = tab.url.split('apps.facebook.com%2F')[1].split('%2F')[0];		    
+//		    var actions = tab.url.split('scope=').pop();
+//		}
+//	}
+//	//alert('called ' + JSON.stringify(changeInfo) + JSON.stringify(tab));
+//}
+
+standardLabel.animationNumber = 6;
+standardLabel.animationInterval = 166;
+standardLabel.animationCount = 0;
+standardLabel.animationTimer = [];  // timers for every window
+
+standardLabel.animate = function(windowId,tabId) {
+    console.log("animate "+windowId);
+	standardLabel.animationCount = 0;
+	standardLabel.animationTimer[windowId] = setInterval(function(){standardLabel.doAnimation(windowId,tabId);}, standardLabel.animationInterval);
+
+}
+
+standardLabel.stopAnimation = function(windowId,tabId) {
+    console.log("stopAnimation "+windowId);
+	clearInterval(standardLabel.animationTimer[windowId]);
+	standardLabel.animationTimer[windowId] = undefined;
+	standardLabel.clearAnimation(tabId);
+}
+
+standardLabel.clearAnimation = function(tabId) {
+	chrome.browserAction.setIcon({path: "images/default.19x19.png", "tabId":tabId});
+}
+
+standardLabel.doAnimation = function(windowId,tabId) {
+ 	if(standardLabel.animationCount++ %2)
+		chrome.browserAction.setIcon({path: "images/icon.png", "tabId":tabId});
+	else
+		chrome.browserAction.setIcon({path: "images/default.19x19.png", "tabId":tabId});
 }
 
 chrome.extension.onMessage.addListener(
@@ -174,7 +278,9 @@ var success = true;
 //standardLabelTester.test();
 
 
-chrome.tabs.onUpdated.addListener(standardLabel.newTab);
+chrome.tabs.onUpdated.addListener(standardLabel.tabUpdate);
+//chrome.tabs.onUpdated.addListener(standardLabel.tabActivate);
+chrome.tabs.onHighlighted.addListener(standardLabel.tabHighlight);
 
 
 										 
