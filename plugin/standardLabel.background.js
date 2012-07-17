@@ -11,7 +11,8 @@ standardLabel.tabUpdate = function(tabId, changeInfo, tab) {
 	var data;
 	switch(changeInfo.status) {
 	   case "complete" : 
-	        data = standardLabel.setIcon(tab.url,tab.windowId,tabId);
+	        data = standardLabel.setData(tab.url,tab.windowId,tabId);
+					standardLabel.setIcon(data);
 	        break;
 	    case "loading" :
 	        break;
@@ -33,35 +34,47 @@ standardLabel.tabHighlight = function(highlightInfo) {
 	console.log("tabActivate highlightInfo: "+JSON.stringify(highlightInfo));
 }
 
-standardLabel.setIcon = function(url,windowId,tabId) {
+
+standardLabel.setData = function(url,windowId,tabId) {
+	var data = {"source" : url,
+					 	 	"tabId" : tabId};
 	var OAuth = standardLabel.checkOAuth(url)
 	if(OAuth) {
-		chrome.browserAction.setIcon({path: "images/active.19x19.png", "tabId":tabId});
+		data.type="OAuth";
+		data.target=OAuth;
+	} else {
+	  data.type="default"; // target can be ignored
+	}
+}
+												
+standardLabel.setIcon = function(data) {
+	if(data.type == "OAuth") {
+		chrome.browserAction.setIcon({path: "images/active.19x19.png", "tabId":data.tabId});
 		return OAuth;
 	} else {
-		chrome.browserAction.setIcon({path: "images/default.19x19.png", "tabId":tabId});
+		chrome.browserAction.setIcon({path: "images/default.19x19.png", "tabId":data.tabId});
 	}
 	return undefined;
 }
 
-standardLabel.setPopupHtml = function(popupName,tabId,data) {
+standardLabel.setPopupHtml = function(data) {
 	
 	var url;
-	switch(popupName) {
+	switch(data.type) {
 		case "default" :
 			url=standardLabel.defaultHtml;
 			break;
-		case "active" :
+		case "OAuth" :
 			url=standardLabel.activeHtml;
 			break;
 		default:
-			console.log("error: unknown popupName in standardLabel.setPopupHtml()");
+			console.log("error: unknown data.type in standardLabel.setPopupHtml() : "+data.type);
 			return;
 	}
 	if(data)
 		url+= "?data="+encodeURIComponent(JSON.stringify(data));
 		
-	chrome.browserAction.setPopup({"tabId":tabId,"popup":url});
+	chrome.browserAction.setPopup({"tabId":data.tabId,"popup":url});
 }
 
 standardLabel.setTabStatus = function(url,windowId,tabId) {
