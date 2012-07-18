@@ -3,28 +3,29 @@
 // Requires jquery.
 
 $(document).ready(function() {
-	var target;
+	var pivot;
+	data = extractData(window.location.search);
+console.log(JSON.stringify(data));
 	switch($("body").attr("id")) {
 		case "default" :
-			target = window.location.href;
+			pivot = data.source;
 			break;
 		case "active" :
-			target = extractData(window.location.search);
+		  pivot = data.target;
 			break;
 		default:
 			console.log("loaded in unknown body. id = "+$("body").attr("id"));
 	}
-	if(target)
-		addTarget(target);
+	if(pivot)
+		addPivot(pivot);
 });
 
 var extractData = function(uri) { 
-	console.log(typeof uri);
+	console.log(typeof uri + " : "+uri);
 	if(typeof uri != "string" || uri[0] != "?")
 		return undefined;
 	
 	data = uri.match(/(?:\?|&)data=([^&]*)(?:&|$)/)[1];
-	console.log(data);
 	data = decodeURIComponent(data);
 	if(data[0] == "\"") {
 		data = data.substring(1,data.length-2);
@@ -33,6 +34,6 @@ var extractData = function(uri) {
 	return data;
 }
 
-var addTarget = function(target) {
-	$("a#target").attr("href",target).attr("target","_blank").append(target);
+var addPivot = function(pivot) {
+	$("a#pivot").attr("href",pivot).attr("target","_blank").append(pivot);
 }

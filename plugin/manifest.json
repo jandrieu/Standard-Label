@@ -5,8 +5,8 @@
   "description": "A Universal Addon for the Standard Information Sharing Label",
   "content_scripts" : [{
       "matches": ["https://www.facebook.com/*"],
-      "css" : ["standardLabel.css"], //"bootstrap.css"], 
-      "js" : ["jquery-1.7.2.min.js", "tipsy.js","popover.js","standardLabel.js"]
+      "css" : ["css/standardLabel.css"], 
+      "js" : ["lib/jquery-1.7.2.min.js", "lib/tipsy.js","lib/popover.js","js/standardLabel.js"]
   }],
   "browser_action": {
     "default_popup": "default.html",
@@ -14,7 +14,7 @@
     "default_title": "Standard Label"      // optional; shown in tooltip
   },
   "background": {
-    "scripts": ["standardLabel.background.js"]
+    "scripts": ["js/standardLabel.background.js"]
   },
   "permissions": ["tabs", "http://www.facebook.com/", "https://www.facebook.com/"]
 }

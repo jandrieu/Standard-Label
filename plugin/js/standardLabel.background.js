@@ -13,16 +13,12 @@ standardLabel.tabUpdate = function(tabId, changeInfo, tab) {
 	   case "complete" : 
 	        data = standardLabel.setData(tab.url,tab.windowId,tabId);
 					standardLabel.setIcon(data);
+					standardLabel.setPopupHtml(data);
 	        break;
 	    case "loading" :
 	        break;
 	    default: 
 	        console.log("unknown changeInfo status in standardLabelTabUpdate");
-	}
-	if(data) {
-		standardLabel.setPopupHtml("active",tabId,data);
-	} else {
-		standardLabel.setPopupHtml("default",tabId,data);
 	}
 }
 
@@ -45,6 +41,7 @@ standardLabel.setData = function(url,windowId,tabId) {
 	} else {
 	  data.type="default"; // target can be ignored
 	}
+	return data;
 }
 												
 standardLabel.setIcon = function(data) {
@@ -209,25 +206,30 @@ standardLabelSource.urlIntercepts = [{
 						extraction: undefined
 					}
 				]	
+				},
+				{
+				hit : /^file:\/\/\/c:\/Users\/Joe\/Documents\/GitHub\/Standard-Label\/plugin\/test\.FB\.OAuth\.htm/i,
+				extract : /redirect_uri=([^&]*)(?:&|$)/,
+				name : "Facebook OAuth Test Page1",
+				id : "facebookTest2", // must be unique
+				tests: [
+					{	
+						name: "basic facebook TEST extraction #1",
+        		data:"file:///c:/Users/Joe/Documents/GitHub/Standard-Label/plugin/test.FB.OAuth.htm"
+,
+						isMatch: true
+					},
+					{	
+						name: "basic facebook TEST extraction #2",
+		data:"file:///C:/Users/Joe/Documents/GitHub/Standard-Label/plugin/test.FB.OAuth.htm?client_id=180444840287&redirect_uri=http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads&scope=publish_actions,email,user_birthday,user_location"
+,
+						isMatch: true,
+						extraction:"http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads"
+					}
+
+				]	
 				}];
 
-
-//regexMatchTests = [{
-//	"rx" : /^https:\/\/www\.facebook\.com\/dialog\/oauth/,
-//	"data" :"https://www.facebook.com/dialog/oauth?client_id=180444840287&redirect_uri=http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads&scope=publish_actions,email,user_birthday,user_location",
-//	"result" : true
-//}
-//,{
-//	"rx" : /^https:\/\/www\.facebook\.com\/dialog\/oauth/,
-//	"data" :"https://www.facebok.com/dialog/oauth?client_id=180444840287&redirect_uri=http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads&scope=publish_actions,email,user_birthday,user_location",
-//	"result" : false
-//	}
-//,{
-//	"rx" : /^https:\/\/www\.facebook\.com\/dialog\/oauth/,
-//	"data" :"https://www.facebook.com/dialog/oauth?client_id=180444840287&redirect_uri=http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads&scope=publish_actions,email,user_birthday,user_location",
-//	"result" : false
-//	}
-//];
 
 standardLabel.checkOAuth = function(url) {
 	// a simple look up to test if the current URL is a known OAuth transaction.
@@ -240,8 +242,13 @@ standardLabel.checkOAuth = function(url) {
 		intercept = standardLabelSource.urlIntercepts[i];
 		
 		// first test for the hit
-		if(intercept.hit.test(url))
-			return decodeURIComponent(intercept.extract.exec(url)[1]); //exit early if we find it
+		    var extraction =intercept.extract.exec(url);
+		    if(extraction){  
+		        extraction=extraction[1];
+      			return decodeURIComponent(extraction); //exit early if we find it
+        } else {
+            return;
+        }
 	}
 }
 
@@ -286,7 +293,8 @@ standardLabelTester.urlInterceptTest = function() {
 					
 					if(match) {
 						// then test for the extraction
-						extraction = intercept.extract.exec(test.data)[1];
+						extraction = intercept.extract.exec(test.data);
+						if(extraction) extraction=extraction[1]; // make sure we pass the test before we try for the extracted data
 						if(test.extraction == extraction) {
 							console.log("URL intercept extraction "+j+" ("+intercept.name+") passed");
 						} else {
@@ -323,7 +331,7 @@ var success = true;
 	
 };
 
-//standardLabelTester.test();
+standardLabelTester.test();
 
 
 chrome.tabs.onUpdated.addListener(standardLabel.tabUpdate);
