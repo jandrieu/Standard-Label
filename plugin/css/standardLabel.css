@@ -112,3 +112,8 @@ td.right{
 
 
 
+/* popup styling */
+
+body.popup {
+	min-width: 400px;
+}

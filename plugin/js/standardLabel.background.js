@@ -34,10 +34,15 @@ standardLabel.tabHighlight = function(highlightInfo) {
 standardLabel.setData = function(url,windowId,tabId) {
 	var data = {"source" : url,
 					 	 	"tabId" : tabId};
-	var OAuth = standardLabel.checkOAuth(url)
-	if(OAuth) {
+	var intercept = standardLabel.checkOAuth(url)
+	if(intercept) {
 		data.type="OAuth";
-		data.target=OAuth;
+		var extraction = intercept.extract.exec(url);
+		if(extraction) {
+			data.target=decodeURIComponent(extraction[1]);
+		} else {
+			data.target=url;
+		}
 	} else {
 	  data.type="default"; // target can be ignored
 	}
@@ -47,11 +52,10 @@ standardLabel.setData = function(url,windowId,tabId) {
 standardLabel.setIcon = function(data) {
 	if(data.type == "OAuth") {
 		chrome.browserAction.setIcon({path: "images/active.19x19.png", "tabId":data.tabId});
-		return OAuth;
 	} else {
 		chrome.browserAction.setIcon({path: "images/default.19x19.png", "tabId":data.tabId});
 	}
-	return undefined;
+	return;
 }
 
 standardLabel.setPopupHtml = function(data) {
@@ -228,7 +232,19 @@ standardLabelSource.urlIntercepts = [{
 					}
 
 				]	
-				}];
+				},{
+				hit : /^https:\/\/www\.facebook\.com\/connect\/uiserver\.php\?.*&method=permissions.request/,
+				extract : /redirect_uri=([^&]*)(?:&|$)/,
+				name : "Facebook Permissions through UIServer Page",
+				id : "facebook2",
+				tests : [
+				    {
+				      name: "Facebook UIServer extraction 1",
+							data : "https://www.facebook.com/connect/uiserver.php?app_id=225496380820004&method=permissions.request&redirect_uri=https%3A%2F%2Fapps.facebook.com%2Fsimcitysocial%2F%3Fpf_ref%3Dx1027_US_NNG-US-M-18-137--6974%26nan_pid%3D70097715&response_type=none&display=page&auth_referral=1",
+							isMatch : true,
+							extraction : "https%3A%2F%2Fapps.facebook.com%2Fsimcitysocial%2F%3Fpf_ref%3Dx1027_US_NNG-US-M-18-137--6974%26nan_pid%3D70097715"
+             }]
+         }];
 
 
 standardLabel.checkOAuth = function(url) {
@@ -240,15 +256,11 @@ standardLabel.checkOAuth = function(url) {
 
 	for(i = 0; i<standardLabelSource.urlIntercepts.length; i++) { // run through all the intercepts
 		intercept = standardLabelSource.urlIntercepts[i];
-		
+		console.log("testing intercept "+i+" "+intercept.hit.test(url));
 		// first test for the hit
-		    var extraction =intercept.extract.exec(url);
-		    if(extraction){  
-		        extraction=extraction[1];
-      			return decodeURIComponent(extraction); //exit early if we find it
-        } else {
-            return;
-        }
+		if(intercept.hit.test(url)) {
+		  return intercept;
+		}
 	}
 }
 

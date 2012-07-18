@@ -6,7 +6,7 @@
   "content_scripts" : [{
       "matches": ["https://www.facebook.com/*"],
       "css" : ["css/standardLabel.css"], 
-      "js" : ["lib/jquery-1.7.2.min.js", "lib/tipsy.js","lib/popover.js","js/standardLabel.js"]
+      "js" : ["lib/jquery-1.7.2.min.js", "lib/tipsy.js","lib/popover.js","lib/QueryData.compressed.js","js/standardLabel.injection.js"]
   }],
   "browser_action": {
     "default_popup": "default.html",
