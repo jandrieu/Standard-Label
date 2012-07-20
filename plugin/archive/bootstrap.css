@@ -507,7 +507,7 @@ h5 {
 h6 {
     font-size: 11px;
     color: #999999;
-    text-transform: uppercase;
+/*    text-transform: uppercase;        removed because it overrides the facebook styles badly  */
 }
 
 .page-header {

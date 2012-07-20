@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+		<link rel="stylesheet" type="text/css" href="css/standardLabel.css"/>
+    <script src="lib/jquery-1.7.2.min.js"></script>
+		<script src="lib/QueryData.compressed.js"></script>
+    <script src="js/standardLabel.popup.js"></script>
+  </head>
+  <body id="active" class="popup">
+	<div id="preload">
+  <p>Loading Standard Label for <a href="" id="pivot"></a></p>
+	</div>
+	<div class="standard_label">
+    <h5 class="draft">Draft Version of the Standard Information Sharing Label</h5>
+    <h1>Sharing Terms</h1>
+    <h6 class="forward">The recipient requests access to certain information for the purpose and duration below.</h6>
+    <table class="terms">
+    	<tr>
+				<td class="left" title="The information requested by the Data Recipient">Requested Data</td>
+				<td class="right" id="requested_data"><ol><li class="unit"></li></ol></td>
+			</tr>
+    	<tr>
+				<td class="left" title="Where the recipient gets the information from">Data Source</td>
+				<td class="right" id="data_source"></td>
+			</tr>
+		<tr>
+			<td class="left" title="When is the information made available to the Data Recipient">Availability</td>
+			<td class="right" id="availability"></td>
+		</tr>
+		<tr>
+			<td class="left" title="Who is asking for your information">Data Recipient</td>
+			<td class="right" id="data_recipient"></td>
+		</tr>
+		<tr>
+			<td class="left" title="Where that information will be used and stored">Location</td>
+			<td class="right" id="location"></td>
+		</tr>
+		<tr>
+			<td class="left" title="How to reach the Data Recipient">Contact</td>
+			<td class="right" id="contact"></td>
+		</tr>
+		<tr>
+			<td class="left" title="What the Data Recipient will use the information for">Purpose</td>
+			<td class="right" id="purpose"></td>
+		</tr>
+		<tr>
+			<td class="left" title="The timeframe during which the Data Recipient will use the information">For How Long</td>
+			<td class="right" id="for_how_long"></td>
+		</tr>
+		<tr>
+			<td class="left" title="How the Data Recipient will communicate the output">Output To</td>
+			<td class="right" id="output_to"></td>
+		</tr>
+		<tr>
+			<td class="left"  title="Terms and links for revoking the data and/or permission to use the data">Revocation</td>
+			<td class="right" id="revocation"></td>
+		</tr>
+		<tr>
+			<td class="left"  title="The circumstances under which the Data Recipient may redistribute your data">Redistribution</td>
+			<td class="right" id="redistribution"></td>
+		</tr>
+		<tr>
+			<td class="left"  title="How you can view your Shared Information in the future">Access</td>
+			<td class="right" id="access"></td>
+		</tr>
+		<tr>
+			<td class="left"  title="Any additional terms presented by the Data Recipient regarding this Shared Information">Additional Terms</td>
+			<td class="right" id="additional_terms"></td>
+		</tr>
+		<tr>
+			<td class="left" title="Legal agreements and policies that apply to this transaction">Related Agreements</td>
+			<td class="right" id="related_agreements"></td>
+		</tr>
+		<tr>
+			<td class="left"  title="Data Recipient ratings by independent third parties">3rd Party Ratings</td>
+			<td class="right" id="third_party_ratings">
+			</td>
+		</tr>
+		<tr>
+			<td class="left" title="How this Data Transaction, under these terms, will be recorded">Record</td>
+			<td class="right" id="record"></td>
+		</tr>
+		<tr>
+			<td class="left"  title="The party responsible for the terms in this label">Author</td>
+			<td class="right" id="author"></td>
+		</tr>
+	</table>
+	
+  </body>
+</html>
