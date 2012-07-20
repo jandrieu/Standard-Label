@@ -1,7 +1,6 @@
 if(typeof standardLabel == "undefined")
 	var standardLabel = {};
 
-
 standardLabel.activeHtml = "active.html";
 standardLabel.defaultHtml = "default.html";
 
@@ -34,15 +33,12 @@ standardLabel.tabHighlight = function(highlightInfo) {
 standardLabel.setData = function(url,windowId,tabId) {
 	var data = {"source" : url,
 					 	 	"tabId" : tabId};
-	var intercept = standardLabel.checkOAuth(url)
-	if(intercept) {
+	var package = standardLabel.checkOAuth(url);
+	if(package) {
 		data.type="OAuth";
-		var extraction = intercept.extract.exec(url);
-		if(extraction) {
-			data.target=decodeURIComponent(extraction[1]);
-		} else {
-			data.target=url;
-		}
+		data.handler=package.handler;
+		data.target=package.redirect;
+		data.label=package.label;
 	} else {
 	  data.type="default"; // target can be ignored
 	}
@@ -78,106 +74,7 @@ standardLabel.setPopupHtml = function(data) {
 	chrome.browserAction.setPopup({"tabId":data.tabId,"popup":url});
 }
 
-standardLabel.setTabStatus = function(url,windowId,tabId) {
-    console.log("setTabStatus: "+windowId);
-	if(typeof standardLabel.tabs[windowId] == "undefined")
-		standardLabel.tabs[windowId] = [];
-		
-	standardLabel.stopAnimation(windowId,tabId);
-	standardLabel.tabs[windowId][tabId] = "default";
-	var OAuth = standardLabel.checkOAuth(url)
-}
- 
-standardLabel.showStatus = function(windowId,tabId) {
-	
-    console.log("showStatus: "+windowId);
 
-    if(windowId in standardLabel.tabs) {
-        if(tabId in standardLabel.tabs[windowId]) {
-            var status = standardLabel.tabs[windowId][tabId];
-            standardLabel.windowStatus[windowId]={"status":status,"tabId":tabId};
-        } else {
-			standardLabel.windowStatus[windowId]="default";
-		}
-    }
-    standardLabel.drawStatus(windowId,tabId); // this will paint the icon and start animation timer if necessary (for the window)
-        
-	return;
-}
-
-standardLabel.drawStatus = function(windowId,tabId) {
-    console.log("drawStatus: "+windowId);
-
-	var status=standardLabel.windowStatus[windowId];
-	if(typeof status=="undefined" || status.status == "default") {
-			console.log("setting default animation");
-			standardLabel.stopAnimation(windowId,tabId);
-	} else if ("type" in status.status){
-		switch (status.status.type) {
-			case "OAuth":
-				standardLabel.animate(windowId,tabId);
-				break;
-			default:
-				console.log("unknown status type in standardLabel.drawStatus: "+JSON.stringify(status));
-		}
-	} else {
-		console.log("unknown status in standardLabel.drawStatus: "+JSON.stringify(status));
-	}
-}
-
-//standardLabel.newTab = function (tabId, changeInfo, tab) 
-//{
-//	if (changeInfo.status == 'complete') 
-//	{
-//		var OAuth = standardLabel.checkOAuth(tab.url)
-////		console.log(tab.url);
-////		console.log("checkOAuth: "+JSON.stringify(standardLabel.checkOAuth(tab.url)));
-////		chrome.browserAction.setIcon({path: "images/icon.png"})
-//
-//		if(OAuth) {
-//			standardLabel.animate();			
-//		} else {
-//			standardLabel.stopAnimation();
-//		}
-//		if (tab.url.split('oauth').length > 1)
-//		{
-//		    
-//		    var appName = tab.url.split('apps.facebook.com%2F')[1].split('%2F')[0];		    
-//		    var actions = tab.url.split('scope=').pop();
-//		}
-//	}
-//	//alert('called ' + JSON.stringify(changeInfo) + JSON.stringify(tab));
-//}
-
-standardLabel.animationNumber = 6;
-standardLabel.animationInterval = 166;
-standardLabel.animationCount = 0;
-standardLabel.animationTimer = [];  // timers for every window
-
-standardLabel.animate = function(windowId,tabId) {
-    console.log("animate "+windowId);
-	standardLabel.animationCount = 0;
-	standardLabel.animationTimer[windowId] = setInterval(function(){standardLabel.doAnimation(windowId,tabId);}, standardLabel.animationInterval);
-
-}
-
-standardLabel.stopAnimation = function(windowId,tabId) {
-    console.log("stopAnimation "+windowId);
-	clearInterval(standardLabel.animationTimer[windowId]);
-	standardLabel.animationTimer[windowId] = undefined;
-	standardLabel.clearAnimation(tabId);
-}
-
-standardLabel.clearAnimation = function(tabId) {
-	chrome.browserAction.setIcon({path: "images/default.19x19.png", "tabId":tabId});
-}
-
-standardLabel.doAnimation = function(windowId,tabId) {
- 	if(standardLabel.animationCount++ %2)
-		chrome.browserAction.setIcon({path: "images/icon.png", "tabId":tabId});
-	else
-		chrome.browserAction.setIcon({path: "images/default.19x19.png", "tabId":tabId});
-}
 
 chrome.extension.onMessage.addListener(
 	function(request, sender, sendResponse) {
@@ -195,6 +92,7 @@ standardLabelSource.urlIntercepts = [{
 				hit : /^https:\/\/www\.facebook\.com\/dialog\/oauth/,
 				extract : /redirect_uri=([^&]*)(?:&|$)/,
 				name : "Facebook OAuth Permissions",
+				handler : "facebook",  
 				id : "facebook", // must be unique
 				tests: [
 					{	
@@ -215,6 +113,7 @@ standardLabelSource.urlIntercepts = [{
 				hit : /^file:\/\/\/c:\/Users\/Joe\/Documents\/GitHub\/Standard-Label\/plugin\/test\.FB\.OAuth\.htm/i,
 				extract : /redirect_uri=([^&]*)(?:&|$)/,
 				name : "Facebook OAuth Test Page1",
+				handler: "facebook",
 				id : "facebookTest2", // must be unique
 				tests: [
 					{	
@@ -236,6 +135,7 @@ standardLabelSource.urlIntercepts = [{
 				hit : /^https:\/\/www\.facebook\.com\/connect\/uiserver\.php\?.*&method=permissions.request/,
 				extract : /redirect_uri=([^&]*)(?:&|$)/,
 				name : "Facebook Permissions through UIServer Page",
+				handler: "facebook",
 				id : "facebook2",
 				tests : [
 				    {
@@ -249,25 +149,99 @@ standardLabelSource.urlIntercepts = [{
 
 standardLabel.checkOAuth = function(url) {
 	// a simple look up to test if the current URL is a known OAuth transaction.
-	// if it is, extract the destination signature and return it
+	// if it is, call the handler and return the label
 	
 	// for now we just check for facebook OAuth
 	//https://www.facebook.com/dialog/oauth?client_id=180444840287&redirect_uri=http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads&scope=publish_actions,email,user_birthday,user_location
-
+	result = {};
 	for(i = 0; i<standardLabelSource.urlIntercepts.length; i++) { // run through all the intercepts
 		intercept = standardLabelSource.urlIntercepts[i];
 		console.log("testing intercept "+i+" "+intercept.hit.test(url));
 		// first test for the hit
 		if(intercept.hit.test(url)) {
-		  return intercept;
+			// since this is for OAuth, we also need to extract the redirect_URI as the 
+			// label is keyed on both
+			
+			result.handler = intercept.handler;
+			extraction = intercept.extract.exec(url);
+			if(extraction) {
+				result.redirect = decodeURIComponent(extraction[1]);
+				result.label = standardLabel.getLabel(result.handler,result.redirect);
+				if(result.label)
+				  return result;  // return only if there's a valid target that we know (this is OAuth!)
+			}
 		}
 	}
 }
 
-standardLabel.checkRedirect = function(uri) {
-	
+
+// labels are provided as arrays keyed to their handler
+// so, all Facebook apps are indexed to "facebook"
+standardLabelSource.labels = {	
+	"facebook" : [{
+  	"name": "Guardian Facebook App",
+  	"id": "facebook_guardian",
+  	"redirectRx": /^http:\/\/apps\.facebook\.com\/theguardian/,
+  	"tests": [{
+  				      name: "Guardian Facebook App redirect",
+  							data : "http://apps.facebook.com/theguardian/authenticated/commentisfree/2012/jul/08/andy-murray-not-miserable-just-normal?fb_source=other_multiline&fb_action_types=news.reads",
+  							isMatch : true
+              }],
+  	"labelData" : 
+		{
+      requested_data:[
+    		"Your basic info (name, profile picture, gender, networks, user ID, list of friends, any other information you made public)",
+      	"Your e-mail address",
+      	"Your birthday",
+      	"Your location"],
+      data_source:{"source":"3rd Party", "source_link":{"name":"Facebook","url":"http://facebook.com"}},
+      availability:"On Submission",
+      data_recipient:{"name":"The Guardian", "source_link":{"url":"http://www.guardian.co.uk"}},
+      location:"United Kingdom",
+      contact:[{"type":"page","url":"http://www.guardian.co.uk/help/contact-us"}],
+      purpose:"This app may post on your behalf, including videos you watched, articles you read and more.",
+      for_how_long:"Indefinite.",
+      output_to:"Posts to your Facebook wall",
+      revocation:"Facebook permissions may be revoked. Data may be retained by The Guardian.",
+      redistribution:"Unknown",
+      access:"Unknown",
+      related_agreements:[
+    		{"name":"The Guardian Facebook app terms of service","url":"http://www.guardian.co.uk/info/2011/sep/22/2?fb=native"},{"name":"The Guardian Website Terms of Service","url":"http://www.guardian.co.uk/help/terms-of-service"}],
+      third_party_ratings:[
+    		{"name":"Mozilla",
+				  "id" :"mozilla_privacy",
+    			"url":"https://showmefirst.info/ratings/mozilla/theguardian.html",
+    			"icon":"https://wiki.mozilla.org/images/thumb/f/fb/Privacyiconslogo.png/100px-Privacyiconslogo.png"},
+    		{"name":"The Cake is a Lie",
+				  "id" :"cake_is_a_lie",
+    			"url":"https://showmefirst.info/ratings/cake/theguardian.html",
+    			"icon":"https://showmefirst.info/ratings/cake/cake.png"}],
+      record:"This agreement will not be stored.",
+      author:{"service":"The Standard Crowd","author":"Joe Andrieu","url":"http://standardlabel.org/crowd/joeandrieu"}
+    }
+		}]
+};
+
+standardLabel.getLabel = function(handler,redirect) {
+	var redirectKey;
+	switch(handler) {
+		case "facebook":
+			return standardLabel.getFacebookLabel(redirect);
+			break;
+		default: 
+			console.log("Unknown handler in StandardLabel.getLabel: "+handler);			
+	}
 }
 
+standardLabel.getFacebookLabel = function(redirect) {
+	labels = standardLabelSource.labels["facebook"];
+	for (i=0; i<labels.length; i++){
+		if(labels[i].redirectRx.exec(redirect)){
+			console.log("redirect found:"+labels[i].name);
+			return labels[i].labelData;
+		}
+	}
+}
 
 standardLabelTester = {};
 
@@ -330,11 +304,86 @@ standardLabelTester.urlInterceptTest = function() {
 		return success;
 }
 
+standardLabelTester.labelTest = function() {
+		
+	// We run every label hit test.
+	
+//	standardLabelSource.labels = {
+//	"facebook" : [{
+//  	"name": "Guardian Facebook App",
+//  	"id": "facebook_guardian",
+//  	"redirectRx": /^http:\/\/apps\.facebook\.com%\/theguardian/,
+//  	"tests": [{
+//  				      name: "Guardian Facebook App redirect",
+//  							data : //"http://apps.facebook.com/theguardian/authenticated/commentisfree/2012/jul/08/andy-murray-not-miserable-just-normal?fb_source=other_multiline&fb_action_types=news.reads",
+//  							isMatch : true
+//              }],
+//  	"labelData" : 
+//		{
+//      requested_data:[
+
+		// NOTE: Eventually this should test the label data itself against a standard.
+
+		console.log("testing label regexs");
+		var success = true;
+		for(i in standardLabelSource.labels) { // run through all the handlers
+
+			// I really don't know if these are going to be different for different handlers
+			// but they might be
+  		switch(i) {
+  			case "facebook":
+  				success = standardLabel.testFacebookLabels(standardLabelSource.labels[i]) && success;
+  				break;
+  			default:
+  				console.log("Unknown label handlers in standardLabelSource.labels");
+  				success = false;
+  		}			
+		}
+
+		if(!success) 
+			console.log("************************\nLabel tests FAILED!\n************************");
+		else
+			console.log("Label tests passed.");
+
+		return success;
+}
+
+
+//  	"name": "Guardian Facebook App",
+//  	"id": "facebook_guardian",
+//  	"redirectRx": /^http:\/\/apps\.facebook\.com%\/theguardian/,
+//  	"tests": [{
+//  				      name: "Guardian Facebook App redirect",
+//  							data : //"http://apps.facebook.com/theguardian/authenticated/commentisfree/2012/jul/08/andy-murray-not-miserable-just-normal?fb_source=other_multiline&fb_action_types=news.reads",
+//  							isMatch : true
+//              }],
+//  	"labelData" : ...
+standardLabel.testFacebookLabels = function(labels){
+	var success = true;
+	var match;
+	
+	for(i=0; i<labels.length; i++) {		// run all the labels for Facebook
+		label = labels[i];
+		for(j=0; j<label.tests.length;j++) { // now all the tests for each label
+			test = label.tests[j];
+      match = label.redirectRx.test(test.data);
+      if(match==test.isMatch) {
+      	console.log("label match test "+j+" : "+ test.name +" for label "+label.name+" passed");
+      } else {
+      	console.log("label match test "+j+" : "+ test.name +" for label "+label.name+" failed");
+      	success = false;
+      }
+		}
+  }
+	return success;
+}
 								 
 standardLabelTester.test = function() {
-var success = true;
+  var success = true;
 
-	success &= standardLabelTester.urlInterceptTest();
+	success = standardLabelTester.urlInterceptTest() && success
+	success = standardLabelTester.labelTest() && success;
+
 
 	if(!success) 
 		console.log("************************\nStandard Label tests FAILED!\n************************");
