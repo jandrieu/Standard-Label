@@ -1,0 +1,8 @@
+This document includes license information for the Standard Label Codebase and related assets. More details to come soon.
+
+The code will be licensed under a dual GPL/MIT license.
+Other assets will be licensed under a creative commons share-alike, no derivatives, attribution license.
+All other intellectual property rights are reserved.
+
+Also, we give attribution to the cake icon used in the Cake Is a Lie mockup service. We got that from FindIcons.com's Farm-Fresh Web. It was designed by FatCow Web Hosting and can be found at http://findicons.com/icon/164554/cake#
+
