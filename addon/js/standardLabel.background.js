@@ -354,9 +354,95 @@ standardLabelSource.labels = {
 	"google_search" : {
 		"name": "Google Search",
 		"id": "google_search",
-		"labelData" : 
-	{"requested_data":"Search Terms","data_source":{"source":"Web Form", "source_link":{"name":"Search Box","selector":"input[name=q]"}},"availability":{"standard_term":"Interactive", "detail":"as you type"},"data_recipient":{"name":"The Guardian", "source_link":{"url":"http://www.guardian.co.uk"}, "citation":{"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/","access_date":"2012-07-25"}},"location":"California, United States; Finland; Belgium; Singapore; Hong Kong; Taiwan", "citation":{"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/","access_date":"2012-07-25"},"contact":[{"type":"page","data":"http://www.google.com/contact/"}],"purpose":"Recommend web pages","for_how_long":{"term":"Indefinitely. Anonymized when removed.", "citation":{"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/","access_date":"7/25/2012"}},"output_to":{"standard_term":"Current Web Page", "detail":"Search Results"},"revocation":{"description":"Revocable for services. Non-revocable logs retained for analytics, auditing, and service improvement. ", "url":"https://www.google.com/history/", "citation":{"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"7/25/2012"}},"redistribution":{ "term":"External processing in confidence, protect the public, due process, administrators, with consent. Aggregated, non-PII with partners.", "citation":{"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"2012-07-25"}},"access":{"url":"https://www.google.com/dashboard/"},"additional_terms":{"term":"Statistical Aggregation (Search Trends), Promotional Offers (ad network optimization)", "citation":{"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"2012-07-25"}},"related_agreements":[{"name":"Privacy Policy","url":"https://www.google.com/intl/en/policies/privacy/"},{"name":"Google Terms of Service","url":"https://www.google.com/intl/en/policies/terms/"}],"third_party_ratings":[{"name":"Mozilla","url":"http://mozilla.com/privacyIcons/Guardian","icon":"https://wiki.mozilla.org/images/thumb/f/fb/Privacyiconslogo.png/100px-Privacyiconslogo.png"}],"author":{"service":"The Standard Crowd","author":"Joe Andrieu","url":"http://standardlabel.org/crowd/joeandrieu"},"version":"0.4"}
-}};
+		"labelData" : {
+			"requested_data":"Search Terms",
+			"data_source":{
+				"source":"Web Form", 
+				"source_link":{
+					"name":"Search Box",
+					"selector":"input[name=q]"
+				}
+			},
+			"availability":{
+				"standard_term":"Interactive", 
+				"detail":"as you type"
+			},
+			"data_recipient":{
+				"name":"The Guardian", 
+				"source_link":{
+					"url":"http://www.guardian.co.uk"
+				}, 
+				"citation":{
+					"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/",
+					"access_date":"2012-07-25"
+				}
+			},
+			"location":{
+				"term":"California, United States; Finland; Belgium; Singapore; Hong Kong; Taiwan", 
+				"citation":{
+					"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/",
+					"access_date":"2012-07-25"
+				}
+			},
+			"contact":[{
+				"type":"page",
+				"data":"http://www.google.com/contact/"
+			}],
+			"purpose":"Recommend web pages",
+			"for_how_long":{
+				"term":"Indefinitely. Anonymized when removed.", 
+				"citation":{
+					"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/",
+					"access_date":"7/25/2012"
+				}
+			},
+			"output_to":{
+				"standard_term":"Current Web Page", 
+				"detail":"Search Results"
+			},
+			"revocation":{
+				"description":"Revocable for services. Non-revocable logs retained for analytics, auditing, and service improvement. ", 
+				"url":"https://www.google.com/history/", 
+				"citation":{
+					"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"7/25/2012"
+				}
+			},
+			"redistribution":{
+				"term":"External processing in confidence, protect the public, due process, administrators, with consent. Aggregated, non-PII with partners.", 
+				"citation":{
+					"url":"https://www.google.com/intl/en/policies/privacy/#nosharing",
+					"access_date":"2012-07-25"
+				}
+			},
+			"access":{
+				"url":"https://www.google.com/dashboard/"
+			},
+			"additional_terms": {
+				"term":"Statistical Aggregation (Search Trends), Promotional Offers (ad network optimization)", 
+				"citation":{
+					"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"2012-07-25"}
+				},
+			"related_agreements":[{
+				"name":"Privacy Policy",
+				"url":"https://www.google.com/intl/en/policies/privacy/"
+			},{
+				"name":"Google Terms of Service",
+				"url":"https://www.google.com/intl/en/policies/terms/"
+			}],
+			"third_party_ratings":[{
+				"name":"Mozilla",
+				"url":"http://mozilla.com/privacyIcons/Guardian",
+				"icon":"https://wiki.mozilla.org/images/thumb/f/fb/Privacyiconslogo.png/100px-Privacyiconslogo.png"
+			}],
+			"author":{
+				"service":"The Standard Crowd",
+				"author":"Joe Andrieu",
+				"url":"http://standardlabel.org/crowd/joeandrieu"
+			},
+			"version":"http://standardlabel.org/v0.4"
+		}
+	}
+};
 
 standardLabel.getLabel = function(handler,redirect) {
 	var redirectKey;
