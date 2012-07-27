@@ -144,7 +144,133 @@ standardLabelSource.urlIntercepts = [{
 							isMatch : true,
 							extraction : "https%3A%2F%2Fapps.facebook.com%2Fsimcitysocial%2F%3Fpf_ref%3Dx1027_US_NNG-US-M-18-137--6974%26nan_pid%3D70097715"
              }]
-         }];
+         },
+				{
+				hit : /(http(s|):\/\/www\.google\.com\/search.+|http(s|):\/\/www\.google\.com\/?$)/,
+				name : "Google Search",
+				handler: "google_search",
+				id : "google_search", // must be unique
+				tests: [
+					{	
+						name: "Google Home Page with slash",
+						data: "https://www.google.com/",
+						isMatch: true
+					},
+					{	
+						name: "Google Home Page",
+						data: "https://www.google.com",
+						isMatch: true
+					},{
+						name: "Embedded Google.com",
+						data: "https://www.joeandrieu.com/test&q=http://google.com",
+						isMatch :false
+					},{	
+						name: "",
+						data: "https://www.google.com/search? sourceid=chrome&ie=UTF-8&q=wacaca",
+						isMatch: true,
+					},{	
+						name: "",
+						data: "http://example.com/google.com/cheese",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "https://www.google.com/calendar/render",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://docs.google.com",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "https://www.google.com/search?sourceid=chrome&ie=UTF-8&q=testy",
+						isMatch: true,
+					},					{	
+						name: "",
+						data: "https://www.google.com/search?hl=en&q=news&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.,cf.osb&biw=1024&bih=538&um=1&ie=UTF-8&tbm=isch&source=og&sa=N&tab=wi&ei=31sRUPjDMaPl0QHD4oDgAQ",
+						isMatch: true,
+					},{	
+						name: "",
+						data: "https://mail.google.com/mail/u/0/",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/mobile/?tab=wD",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "https://www.google.com/offers/home?utm_source=xsell&utm_medium=products&utm_campaign=sandbar&tab=wG#!details",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/shopping?hl=en&tab=Gf",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/finance?tab=ye",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "https://www.google.com/latitude/b/0?hl=en",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "https://www.google.com/calendar/render?hl=en&pli=1",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/talk/",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/wallet/#utm_source=EMB&utm_medium=emb-more&utm_campaign=en-US",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/wallet/#utm_source=EMB&utm_medium=emb-more&utm_campaign=en-US",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "https://accounts.google.com/ServiceLogin?service=orkut&continue=http%3A%2F%2Fwww.orkut.com&n hl=en",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/reader/view/?hl=en&source=mmm-en#overview-page",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/cse/?hl=en",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://scholar.google.com/schhp?hl=en",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/trends/",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/alerts?hl=en",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/finance",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "https://www.google.com/?tbm=pts&hl=e",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/blogsearch?hl=en",
+						isMatch: false,
+					},{	
+						name: "",
+						data: "http://www.google.com/fusiontables/Home/",
+						isMatch: false,
+					}
+					]	
+				}];
 
 
 standardLabel.checkOAuth = function(url) {
@@ -156,19 +282,24 @@ standardLabel.checkOAuth = function(url) {
 	result = {};
 	for(i = 0; i<standardLabelSource.urlIntercepts.length; i++) { // run through all the intercepts
 		intercept = standardLabelSource.urlIntercepts[i];
-		console.log("testing intercept "+i+" "+intercept.hit.test(url));
+		console.log("testing intercept "+i+" "+intercept.hit.test(url) + " on " + url);
 		// first test for the hit
 		if(intercept.hit.test(url)) {
 			// since this is for OAuth, we also need to extract the redirect_URI as the 
 			// label is keyed on both
 			
 			result.handler = intercept.handler;
-			extraction = intercept.extract.exec(url);
-			if(extraction) {
-				result.redirect = decodeURIComponent(extraction[1]);
-				result.label = standardLabel.getLabel(result.handler,result.redirect);
-				if(result.label)
-				  return result;  // return only if there's a valid target that we know (this is OAuth!)
+			if(intercept.extract) {  // extract data to pass to the handler
+				extraction = intercept.extract.exec(url);
+				if(extraction) {
+					result.redirect = decodeURIComponent(extraction[1]);
+					result.label = standardLabel.getLabel(result.handler,result.redirect);
+					if(result.label)
+					  return result;  // return only if there's a valid target that we know (this is OAuth!)
+				}
+			} else { // just get the label 
+				result.label = standardLabel.getLabel(result.handler);
+				return result;
 			}
 		}
 	}
@@ -219,8 +350,13 @@ standardLabelSource.labels = {
       record:"This agreement will not be stored.",
       author:{"service":"The Standard Crowd","author":"Joe Andrieu","url":"http://standardlabel.org/crowd/joeandrieu"}
     }
-		}]
-};
+		}],
+	"google_search" : {
+		"name": "Google Search",
+		"id": "google_search",
+		"labelData" : 
+	{"requested_data":"Search Terms","data_source":{"source":"Web Form", "source_link":{"name":"Search Box","selector":"input[name=q]"}},"availability":{"standard_term":"Interactive", "detail":"as you type"},"data_recipient":{"name":"The Guardian", "source_link":{"url":"http://www.guardian.co.uk"}, "citation":{"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/","access_date":"2012-07-25"}},"location":"California, United States; Finland; Belgium; Singapore; Hong Kong; Taiwan", "citation":{"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/","access_date":"2012-07-25"},"contact":[{"type":"page","data":"http://www.google.com/contact/"}],"purpose":"Recommend web pages","for_how_long":{"term":"Indefinitely. Anonymized when removed.", "citation":{"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/","access_date":"7/25/2012"}},"output_to":{"standard_term":"Current Web Page", "detail":"Search Results"},"revocation":{"description":"Revocable for services. Non-revocable logs retained for analytics, auditing, and service improvement. ", "url":"https://www.google.com/history/", "citation":{"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"7/25/2012"}},"redistribution":{ "term":"External processing in confidence, protect the public, due process, administrators, with consent. Aggregated, non-PII with partners.", "citation":{"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"2012-07-25"}},"access":{"url":"https://www.google.com/dashboard/"},"additional_terms":{"term":"Statistical Aggregation (Search Trends), Promotional Offers (ad network optimization)", "citation":{"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"2012-07-25"}},"related_agreements":[{"name":"Privacy Policy","url":"https://www.google.com/intl/en/policies/privacy/"},{"name":"Google Terms of Service","url":"https://www.google.com/intl/en/policies/terms/"}],"third_party_ratings":[{"name":"Mozilla","url":"http://mozilla.com/privacyIcons/Guardian","icon":"https://wiki.mozilla.org/images/thumb/f/fb/Privacyiconslogo.png/100px-Privacyiconslogo.png"}],"author":{"service":"The Standard Crowd","author":"Joe Andrieu","url":"http://standardlabel.org/crowd/joeandrieu"},"version":"0.4"}
+}};
 
 standardLabel.getLabel = function(handler,redirect) {
 	var redirectKey;
@@ -228,6 +364,8 @@ standardLabel.getLabel = function(handler,redirect) {
 		case "facebook":
 			return standardLabel.getFacebookLabel(redirect);
 			break;
+		case "google_search":
+			return standardLabel.getDefaultLabel(handler);
 		default: 
 			console.log("Unknown handler in StandardLabel.getLabel: "+handler);			
 	}
@@ -243,6 +381,9 @@ standardLabel.getFacebookLabel = function(redirect) {
 	}
 }
 
+standardLabel.getDefaultLabel = function(handler) {
+	return standardLabelSource.labels[handler].labelData; // there is only one label
+}
 standardLabelTester = {};
 
 standardLabelTester.urlInterceptTest = function() {
@@ -275,9 +416,9 @@ standardLabelTester.urlInterceptTest = function() {
 				// first test for the hit
 				match = intercept.hit.test(test.data);
 				if(match==test.isMatch) {
-					console.log("URL intercept hit "+j+" ("+intercept.name+") passed");
+					console.log("URL intercept hit "+j+" ("+intercept.name+":"+test.name+") passed on " + test.data);
 					
-					if(match) {
+					if(match & intercept.extract) {
 						// then test for the extraction
 						extraction = intercept.extract.exec(test.data);
 						if(extraction) extraction=extraction[1]; // make sure we pass the test before we try for the extracted data
@@ -290,7 +431,7 @@ standardLabelTester.urlInterceptTest = function() {
 					}
 					
 				} else {
-					console.log("URL intercept hit "+j+" ("+intercept.name+") failed");
+					console.log("URL intercept hit "+j+" ("+intercept.name+") failed on " + test.data);
 					success = false;
 				}
 			}
@@ -334,8 +475,11 @@ standardLabelTester.labelTest = function() {
   			case "facebook":
   				success = standardLabel.testFacebookLabels(standardLabelSource.labels[i]) && success;
   				break;
+			case "google_search":
+				success = standardLabel.testDefaultLabel(standardLabelSource.labels[i]) && success;
+				break;
   			default:
-  				console.log("Unknown label handlers in standardLabelSource.labels");
+  				console.log("Unknown label handler in standardLabelSource.labels");
   				success = false;
   		}			
 		}
@@ -376,6 +520,11 @@ standardLabel.testFacebookLabels = function(labels){
 		}
   }
 	return success;
+}
+
+standardLabel.testDefaultLabel = function(label) {
+	// right now, default labels don't have a test. The tests are in the intercept
+	return true;
 }
 								 
 standardLabelTester.test = function() {
