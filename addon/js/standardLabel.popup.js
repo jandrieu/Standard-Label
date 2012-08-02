@@ -5,18 +5,19 @@
 $(document).ready(function() {
 	var pivot;
 	data = extractData(window.location.search);
-  console.log(JSON.stringify(data));
-	switch($("body").attr("id")) {
-		case "default" :
-			pivot = data.source;
-			break;
-		case "active" :
-		  pivot = data.target;
-			generateLabel(data.label);
-			break;
-		default:
-			console.log("loaded in unknown body. id = "+$("body").attr("id"));
-	}
+	console.log(JSON.stringify(data));
+	if(data)
+		switch($("body").attr("id")) {
+			case "default" :
+				pivot = data.source;
+				break;
+			case "active" :
+			  pivot = data.target;
+				generateLabel(data.label);
+				break;
+			default:
+				console.log("loaded in unknown body. id = "+$("body").attr("id"));
+		}
 	if(pivot)
 		addPivot(pivot);
 });
@@ -32,7 +33,11 @@ var extractData = function(uri) {
 //	if(data[0] == "\"") {
 //		data = data.substring(1,data.length-2);
 //	}
-  data = JSON.parse(data);
+	try {
+	  data = JSON.parse(data);
+	} catch (e) {
+		// do nothing
+	}
 	console.log(data);
 	return data;
 }
@@ -455,4 +460,156 @@ var releaseRating = function(eventObject) {
 $(document).ready(function(){
   $("div.third_party").on("mouseenter",showRating).on("mouseleave", hideRating);
   $("iframe.rating").on("mouseenter", keepRating).on("mouseleave",releaseRating);
+  $("#clicker").click(testReading);
 });
+
+var string_min = 6;
+var string_max = 60;
+var string_length = string_max-string_min;
+var prop_chars = "0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_:/"
+
+var buildTestDB = function(db_size) {
+	console.log("starting building db size "+ db_size);
+	var start = (new Date).getTime();
+	var end;
+	var db = {};
+	var string_min = 6;
+	var string_max = 60;
+	var string_length = string_max-string_min;
+
+	var cur_length;
+	var cur_property;
+	var cur_char;
+	
+	for (i=0; i<db_size;i++) {
+		cur_property = "";
+		cur_length = Math.floor(Math.random() * string_length) + string_min;
+		for(j=0;j<cur_length;j++) {
+			cur_char = Math.floor(Math.random() * prop_chars.length)
+			cur_property += prop_chars[cur_char];
+		}
+		db[cur_property] = "This is a label! key="+cur_property;
+	}
+	end = (new Date).getTime();
+	console.log("done building db of size "+db_size);
+	console.log("time to build = "+ String(end-start));
+	return db;
+}
+
+var testTestDB = function(db) {
+	
+	// first set up some stat counters
+	var total_time = 0;
+	var total_accesses = 0;
+	var start,end, duration;
+	
+	var num_test_cycles = 20;
+	var tests_per_cycle = 100000;
+	var key_array = new Array(tests_per_cycle);
+
+	var db_size = (Object.keys(db)).length
+	console.log("***************************************");
+	console.log("testing DB size "+db_size);
+	console.log("***************************************");
+	
+
+	// first test ones we know exist
+	console.log("testing existing keys");
+	for(i=0;i<num_test_cycles;i++) {
+		var test_out="";
+		// first, build an array of valid keys;
+		key_array = getTestSet(db,tests_per_cycle);
+		start = (new Date).getTime();
+		for(j=0;j<tests_per_cycle;j++) {
+			test_out += (key_array[j] in db) ? "#" : ".";
+		}
+		end = (new Date).getTime();
+		duration = end-start;		
+		console.log("time to test one cycle of "+tests_per_cycle+" = "+ duration);
+		console.log("average time to access = "+(duration/tests_per_cycle));
+		total_time += duration;
+		total_accesses += tests_per_cycle;
+	}
+
+	console.log("***************************************");
+	console.log("done testing guaranteed reads db size:"+ db_size);
+	console.log("***************************************");
+	
+	console.log("total_time = "+total_time);
+	console.log("total_accesses = "+total_accesses);
+	console.log("average time to access = "+(total_time/total_accesses));
+	
+	// clear out
+	total_time = 0;
+	total_accesses = 0;
+	// then test ones we know don't exist
+	for(i=0;i<num_test_cycles;i++) {
+		var test_out="";
+		// first, build an array of valid keys;
+		key_array = getTestSet(undefined,tests_per_cycle);
+		start = (new Date).getTime();
+		for(j=0;j<tests_per_cycle;j++) {
+			test_out += (key_array[j] in db) ? "#" : ".";
+		}
+		end = (new Date).getTime();
+		duration = end-start;		
+		console.log("time to test "+tests_per_cycle+" = "+ duration);
+		total_time += duration;
+		total_accesses += tests_per_cycle;
+	}
+
+	console.log("***************************************");
+	console.log("done testing empty reads db size:"+ db_size);
+	console.log("***************************************");
+	
+	console.log("total_time = "+total_time);
+	console.log("total_accesses = "+total_accesses);
+	console.log("average time to access = "+(total_time/total_accesses));
+
+
+}
+
+var getTestSet = function(db, count) {
+	var arr = new Array(count);
+	var db_len;
+	var r;
+	var key;
+	if(db) {
+		var all_keys = Object.keys(db);
+		db_len = all_keys.length;
+		for(i = 0; i<count;i++) {
+			r = Math.floor(db_len*Math.random()); 
+			key = all_keys[r];
+			arr[i] = key;
+		}
+	} else {
+		var cur_char="";
+		var cur_property;
+		for(i=0; i<count;i++) {
+			cur_property = "";
+			cur_length = Math.floor(Math.random() * string_length) + string_min;
+			for(j=0;j<cur_length;j++) {
+				cur_char = Math.floor(Math.random() * prop_chars.length)
+				cur_property += prop_chars[cur_char];
+			}
+			arr[i] = cur_property;
+		}
+	}
+	
+	return arr;
+}
+
+var testReading = function() {
+	testTestDB(buildTestDB(1000));
+	testTestDB(buildTestDB(5000));
+	testTestDB(buildTestDB(10000));
+	testTestDB(buildTestDB(50000));
+	testTestDB(buildTestDB(100000));
+	testTestDB(buildTestDB(500000));
+	testTestDB(buildTestDB(1000000));
+	testTestDB(buildTestDB(5000000));
+	return false;
+}
+
+
+
