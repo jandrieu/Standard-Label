@@ -105,7 +105,7 @@ var generateRequestedData = function(data) {
 
 	switch(typeof data) {
 		case "string":
-			$("#requested_data").append(data);
+			$("#requested_data").empty().append(data);
 			break;
 		case "object":
 			if (data instanceof Array) {
@@ -130,15 +130,22 @@ var generateRequestedData = function(data) {
 var	generateDataSource = function(data) {
   html = "<span class='detail'>"+data.source+"</span>";
 	if(data.source_link) {
-		html += "<span class='link'> (<a target='_blank' href='";
-		html += data.source_link.url
-		html += "'>"; 
+		html += "<span class='link'> (";
 		if(data.source_link.name) {
   		html += data.source_link.name;
 			html += " ";
 		}
-		html += data.source_link.url;
-		html += "</a>)</span>";
+		html+="<a target='_blank' href='";
+		if(data.source_link.url) {
+			html += data.source_link.url
+			html += "'>"; 
+			html += data.source_link.url;
+			html += "</a>)</span>";
+
+		} else if (data.source_link.selector) {
+			html += data.source_link.selector;
+			html += "' onclick='highlight()'>Show Me</a>)</span>"
+		}
 	} 
 	$("#data_source").append($(html));
 }
@@ -611,5 +618,9 @@ var testReading = function() {
 	return false;
 }
 
-
+var highlight = function(e) {
+	alert('highlighting');
+	e.preventDefault();
+	return false;
+}
 

@@ -268,6 +268,10 @@ standardLabelSource.urlIntercepts = [{
 						name: "",
 						data: "http://www.google.com/fusiontables/Home/",
 						isMatch: false,
+					},{
+						name: "google result problematic",
+						data: "https://www.google.com/#q=London+2012+javelin&oi=ddle&ct=javelin-2012-hp&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&fp=3caf70095441cb5a&biw=1110&bih=763",
+						isMatch: true
 					}
 					]	
 				}];
@@ -320,6 +324,7 @@ standardLabelSource.labels = {
               }],
   	"labelData" : 
 		{
+			type: "facebook",
       requested_data:[
     		"Your basic info (name, profile picture, gender, networks, user ID, list of friends, any other information you made public)",
       	"Your e-mail address",
@@ -352,94 +357,97 @@ standardLabelSource.labels = {
     }
 		}],
 	"google_search" : {
-		"name": "Google Search",
-		"id": "google_search",
-		"labelData" : {
-			"requested_data":"Search Terms",
-			"data_source":{
-				"source":"Web Form", 
-				"source_link":{
+		name: "Google Search",
+		id: "google_search",
+		labelData : {
+			type: "google",
+			requested_data:"Search Terms",
+			data_source:{
+				source:"Web Form", 
+				source_link:{
 					"name":"Search Box",
 					"selector":"input[name=q]"
 				}
 			},
-			"availability":{
-				"standard_term":"Interactive", 
-				"detail":"as you type"
+			availability:{
+				standard_term:"Interactive", 
+				detail:"as you type"
 			},
-			"data_recipient":{
-				"name":"The Guardian", 
-				"source_link":{
-					"url":"http://www.guardian.co.uk"
+			data_recipient:{
+				name:"The Guardian", 
+				source_link:{
+					url:"http://www.guardian.co.uk"
 				}, 
-				"citation":{
-					"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/",
-					"access_date":"2012-07-25"
+				citation:{
+					url:"http://www.google.com/goodtoknow/data-on-google/search-logs/",
+					access_date:"2012-07-25"
 				}
 			},
-			"location":{
-				"term":"California, United States; Finland; Belgium; Singapore; Hong Kong; Taiwan", 
-				"citation":{
-					"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/",
-					"access_date":"2012-07-25"
+			location:{
+				term:"California, United States; Finland; Belgium; Singapore; Hong Kong; Taiwan", 
+				citation:{
+					url:"http://www.google.com/goodtoknow/data-on-google/search-logs/",
+					access_date:"2012-07-25"
 				}
 			},
-			"contact":[{
-				"type":"page",
-				"data":"http://www.google.com/contact/"
+			contact:[{
+				type:"page",
+				data:"http://www.google.com/contact/"
 			}],
-			"purpose":"Recommend web pages",
-			"for_how_long":{
-				"term":"Indefinitely. Anonymized when removed.", 
-				"citation":{
-					"url":"http://www.google.com/goodtoknow/data-on-google/search-logs/",
-					"access_date":"7/25/2012"
+			purpose:"Recommend web pages",
+			for_how_long:{
+				term:"Indefinitely. Anonymized when removed.", 
+				citation:{
+					url:"http://www.google.com/goodtoknow/data-on-google/search-logs/",
+					access_date:"2012-07-25"
 				}
 			},
-			"output_to":{
-				"standard_term":"Current Web Page", 
-				"detail":"Search Results"
+			output_to:{
+				standard_term:"Current Web Page", 
+				detail:"Search Results"
 			},
-			"revocation":{
-				"description":"Revocable for services. Non-revocable logs retained for analytics, auditing, and service improvement. ", 
-				"url":"https://www.google.com/history/", 
-				"citation":{
-					"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"7/25/2012"
+			revocation:{
+				description:"Revocable for services. Non-revocable logs retained for analytics, auditing, and service improvement. ", 
+				url:"https://www.google.com/history/", 
+				citation:{
+					url:"https://www.google.com/intl/en/policies/privacy/#nosharing",
+					access_date:"2012-07-25"
 				}
 			},
-			"redistribution":{
-				"term":"External processing in confidence, protect the public, due process, administrators, with consent. Aggregated, non-PII with partners.", 
-				"citation":{
-					"url":"https://www.google.com/intl/en/policies/privacy/#nosharing",
-					"access_date":"2012-07-25"
+			redistribution:{
+				term:"External processing in confidence, protect the public, due process, administrators, with consent. Aggregated, non-PII with partners.", 
+				citation:{
+					url:"https://www.google.com/intl/en/policies/privacy/#nosharing",
+					access_date:"2012-07-25"
 				}
 			},
-			"access":{
-				"url":"https://www.google.com/dashboard/"
+			access:{
+				url:"https://www.google.com/dashboard/"
 			},
-			"additional_terms": {
-				"term":"Statistical Aggregation (Search Trends), Promotional Offers (ad network optimization)", 
-				"citation":{
-					"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"2012-07-25"}
+			additional_terms: {
+				term:"Statistical Aggregation (Search Trends), Promotional Offers (ad network optimization)", 
+				citation:{
+					url:"https://www.google.com/intl/en/policies/privacy/#nosharing",
+					access_date:"2012-07-25"}
 				},
-			"related_agreements":[{
-				"name":"Privacy Policy",
-				"url":"https://www.google.com/intl/en/policies/privacy/"
+			related_agreements:[{
+				name:"Privacy Policy",
+				url:"https://www.google.com/intl/en/policies/privacy/"
 			},{
-				"name":"Google Terms of Service",
-				"url":"https://www.google.com/intl/en/policies/terms/"
+				name:"Google Terms of Service",
+				url:"https://www.google.com/intl/en/policies/terms/"
 			}],
-			"third_party_ratings":[{
-				"name":"Mozilla",
-				"url":"http://mozilla.com/privacyIcons/Guardian",
-				"icon":"https://wiki.mozilla.org/images/thumb/f/fb/Privacyiconslogo.png/100px-Privacyiconslogo.png"
+			third_party_ratings:[{
+				name:"Mozilla",
+				url:"http://mozilla.com/privacyIcons/Guardian",
+				icon:"https://wiki.mozilla.org/images/thumb/f/fb/Privacyiconslogo.png/100px-Privacyiconslogo.png"
 			}],
-			"author":{
-				"service":"The Standard Crowd",
-				"author":"Joe Andrieu",
-				"url":"http://standardlabel.org/crowd/joeandrieu"
+			author:{
+				service:"The Standard Crowd",
+				author:"Joe Andrieu",
+				url:"http://standardlabel.org/crowd/joeandrieu"
 			},
-			"version":"http://standardlabel.org/v0.4"
+			version:"http://standardlabel.org/v0.4"
 		}
 	}
 };
@@ -634,4 +642,6 @@ chrome.tabs.onUpdated.addListener(standardLabel.tabUpdate);
 //chrome.tabs.onUpdated.addListener(standardLabel.tabActivate);
 chrome.tabs.onHighlighted.addListener(standardLabel.tabHighlight);
 
+
+//http://www.google.com/#hl=en&sclient=psy-ab&q=asdfa&oq=asdfa&gs_l=hp.3..0i10j0l3.5846.6101.0.7392.5.4.0.0.0.0.227.813.0j2j2.4.0.eqn%2Crate_low%3D0-025%2Crate_high%3D0-025%2Cmin_length%3D2%2Ccconf%3D1-0%2Csecond_pass%3Dfalse%2Cnum_suggestions%3D1%2Cignore_bad_origquery%3Dtrue..0.0...1c.A5ZFqLtb-7o&pbx=1&bav=on.2,or.r_gc.r_pw.r_qf.&fp=b752d12a099bb300&biw=1110&bih=763
 

@@ -1,14 +1,11 @@
 .content {
-
     width: 600px;
     left: 50%;
     position:absolute;
     margin-left: -300px;
-
 }
 
 .subscription_form {
-
     width:400px;
 }
 
@@ -141,4 +138,8 @@ div.third_party img{
 	display:inline-block;
 	width: 32px;
 	height: 32px;
+}
+
+html {
+	height: 1200px;
 }
