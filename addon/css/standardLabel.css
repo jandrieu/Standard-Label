@@ -112,7 +112,7 @@ div.ratings {
 	z-index: 10;
 }
 iframe.rating {
-	border:none;
+	border:none; 
 	display:none;
 	position:absolute;
 	top: 0;

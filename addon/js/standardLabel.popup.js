@@ -118,7 +118,7 @@ var generateRequestedData = function(data) {
 			} else {
 				console.log("unknown object instance in generateRequestedData : " + typeof data + ":" +JSON.stringify(data));
 			}
-			break;
+			break; 
 		default:
 			console.log("unknown data type in generateRequestedData : " + typeof data + ":" +JSON.stringify(data));
 	}

@@ -155,6 +155,10 @@ standardLabelSource.urlIntercepts = [{
 						name: "Google Home Page with slash",
 						data: "https://www.google.com/",
 						isMatch: true
+					},{
+						name: "google result problematic",
+						data: "https://www.google.com/#q=London+2012+javelin&oi=ddle&ct=javelin-2012-hp&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&fp=3caf70095441cb5a&biw=1110&bih=763",
+						isMatch: true
 					},
 					{	
 						name: "Google Home Page",
@@ -233,7 +237,7 @@ standardLabelSource.urlIntercepts = [{
 						data: "https://accounts.google.com/ServiceLogin?service=orkut&continue=http%3A%2F%2Fwww.orkut.com&n hl=en",
 						isMatch: false,
 					},{	
-						name: "",
+						name: "", 
 						data: "http://www.google.com/reader/view/?hl=en&source=mmm-en#overview-page",
 						isMatch: false,
 					},{	
@@ -268,10 +272,6 @@ standardLabelSource.urlIntercepts = [{
 						name: "",
 						data: "http://www.google.com/fusiontables/Home/",
 						isMatch: false,
-					},{
-						name: "google result problematic",
-						data: "https://www.google.com/#q=London+2012+javelin&oi=ddle&ct=javelin-2012-hp&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&fp=3caf70095441cb5a&biw=1110&bih=763",
-						isMatch: true
 					}
 					]	
 				}];
