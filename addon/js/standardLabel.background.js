@@ -147,6 +147,7 @@ standardLabelSource.urlIntercepts = [{
          },
 				{
 				hit : /(http(s|):\/\/www\.google\.com\/search.+|http(s|):\/\/www\.google\.com\/?$)/,
+				comment: "Should capture all google.com/search URLs and google.com by itself (which shows up with the trailing /)",
 				name : "Google Search",
 				handler: "google_search",
 				id : "google_search", // must be unique
@@ -159,8 +160,11 @@ standardLabelSource.urlIntercepts = [{
 						name: "google result problematic",
 						data: "https://www.google.com/#q=London+2012+javelin&oi=ddle&ct=javelin-2012-hp&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&fp=3caf70095441cb5a&biw=1110&bih=763",
 						isMatch: true // failing test
-					},
-					{	
+					},{
+						name: "Google doodle clickthrough",
+						data: "https://www.google.com/webhp?hl=en&tab=ww&authuser=0#q=London+2012+hurdles&oi=ddle&ct=hurdles-2012-hp&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&fp=3caf70095441cb5a&biw=1110&bih=763",
+						isMatch: true
+					},{	
 						name: "Google Home Page",
 						data: "https://www.google.com",
 						isMatch: true
