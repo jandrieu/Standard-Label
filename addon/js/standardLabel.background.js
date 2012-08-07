@@ -158,7 +158,7 @@ standardLabelSource.urlIntercepts = [{
 					},{
 						name: "google result problematic",
 						data: "https://www.google.com/#q=London+2012+javelin&oi=ddle&ct=javelin-2012-hp&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&fp=3caf70095441cb5a&biw=1110&bih=763",
-						isMatch: true
+						isMatch: true // failing test
 					},
 					{	
 						name: "Google Home Page",
