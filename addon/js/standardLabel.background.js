@@ -146,8 +146,8 @@ standardLabelSource.urlIntercepts = [{
              }]
          },
 				{
-				hit : /(http(s|):\/\/www\.google\.com\/search.+|http(s|):\/\/www\.google\.com\/?$)/,
-				comment: "Should capture all google.com/search URLs and google.com by itself (which shows up with the trailing /)",
+				hit : /http(s|):\/\/www\.google\.com($|\/$|\/search\?|\/$|\/webhp|\/#)/,
+				comment: "Should capture all google.com search URLs and google.com by itself (which shows up with the trailing /), 20120808 we fixed the regex so it hits on webhp and hash. Passes all tests"
 				name : "Google Search",
 				handler: "google_search",
 				id : "google_search", // must be unique
