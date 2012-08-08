@@ -357,7 +357,8 @@ standardLabelSource.labels = {
     			"url":"https://showmefirst.info/ratings/cake/theguardian.html",
     			"icon":"https://showmefirst.info/ratings/cake/cake.png"}],
       record:"This agreement will not be stored.",
-      author:{"service":"The Standard Crowd","author":"Joe Andrieu","url":"http://standardlabel.org/crowd/joeandrieu"}
+      author:{"service":"The Standard Crowd","author":"Joe Andrieu","url":"http://standardlabel.org/crowd/joeandrieu"},
+			version:"http://standardlabel.org/v0.3"
     }
 		}],
 	"google_search" : {
@@ -365,7 +366,7 @@ standardLabelSource.labels = {
 		id: "google_search",
 		labelData : {
 			type: "google",
-			requested_data:"Search Terms",
+			shared_data:"Search Terms",
 			data_source:{
 				source:"Web Form", 
 				source_link:{
@@ -451,7 +452,7 @@ standardLabelSource.labels = {
 				author:"Joe Andrieu",
 				url:"http://standardlabel.org/crowd/joeandrieu"
 			},
-			version:"http://standardlabel.org/v0.4"
+			version:"http://standardlabel.org/v0.5"
 		}
 	}
 };

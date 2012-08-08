@@ -73,7 +73,11 @@ var addPivot = function(pivot) {
  
 
 var generateLabel = function(label) {
-	generateRequestedData(label.requested_data);	
+	if(label.version=="http://standardlabel.org/v/0.3")
+		generateRequestedData(label.requested_data);	     // term has been renamed as of 0.4
+	else
+		generateSharedData(label.shared_data);
+		
 	generateDataSource(label.data_source);
 	generateAvailability(label.availability);
 	generateDataRecipient(label.data_recipient);
@@ -88,8 +92,10 @@ var generateLabel = function(label) {
 	generateAdditionalTerms(label.additional_terms);
 	generateRelatedAgreements(label.related_agreements);
 	generateThirdPartyRating(label.third_party_ratings);
-	generateRecord(label.record);
+//	generateRecord(label.record);  Feature removed in 0.4
 	generateAuthor(label.author);
+	generateVersion(label.version); // added version 0.4
+	
 	$("div.standard_label").css({display:"block"});
 	$("#preload").css({display:"none"});
 }
@@ -123,6 +129,41 @@ var generateRequestedData = function(data) {
 			console.log("unknown data type in generateRequestedData : " + typeof data + ":" +JSON.stringify(data));
 	}
 }
+
+var generateSharedData = function(data) {
+	var template,tmp;
+//      requested_data:[
+//    		"Your basic info (name, profile picture, gender, networks, user ID, list of friends, any other information you made public)",
+//      	"Your e-mail address",
+//      	"Your birthday",
+//      	"Your location"],
+// <td class="right" id="requested_data"><ol><li class="unit"></li></ol></td>
+
+	switch(typeof data) {
+		case "string":
+			$("#requested_data").empty().append(data);
+			break;
+		case "object":
+			if (data instanceof Array) {
+  			template = $("#requested_data li.unit").clone();
+  			$("#requested_data ol").empty();
+  			for(i=0;i<data.length;i++) {
+  				tmp = template.clone().append(data[i]);
+  				$("#requested_data ol").append(tmp);
+  			}
+			} else {
+				console.log("unknown object instance in generateSharedData : " + typeof data + ":" +JSON.stringify(data));
+			}
+			break; 
+		default:
+			console.log("unknown data type in generateSharedData : " + typeof data + ":" +JSON.stringify(data));
+	}
+}
+
+
+
+
+
 
 //      data_source:{"source":"3rd Party", "source_link":{"name":"Facebook","url":"http://facebook.com"}},
 //			<td class="right" id="data_source"></td>
@@ -437,6 +478,16 @@ var	generateAuthor = function(data) {
 // Display classes (iframe.rating is already hidden)
 // show/hide: active
 // keep/relase: over
+
+var generateVersion = function(data) {
+	var html = "<a href='"
+	+data
+	+"' target='_blank'>"
+  +data
+	+"</a>";
+	$("#version").append($(html));
+}
+
 
 var ratingHideDelay = 500; // milliseconds
 
