@@ -100,6 +100,7 @@ var generateLabel = function(label) {
 	$("#preload").css({display:"none"});
 }
 
+// This function is deprecated as of http://standardlabel.org/v0.4
 var generateRequestedData = function(data) {
 	var template,tmp;
 //      requested_data:[
@@ -185,7 +186,7 @@ var	generateDataSource = function(data) {
 
 		} else if (data.source_link.selector) {
 			html += data.source_link.selector;
-			html += "' onclick='highlight()'>Show Me</a>)</span>"
+			html += "' onclick='highlight()' >Show Me</a>)</span>"
 		}
 	} 
 	$("#data_source").append($(html));
@@ -670,7 +671,7 @@ var testReading = function() {
 }
 
 var highlight = function(e) {
-	alert('highlighting');
+	alert('highlighting' +$(this).attr("href"));
 	e.preventDefault();
 	return false;
 }
