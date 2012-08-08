@@ -334,7 +334,7 @@ standardLabelSource.labels = {
       	"Your e-mail address",
       	"Your birthday",
       	"Your location"],
-      data_source:{"source":"3rd Party", "source_link":{"name":"Facebook","url":"http://facebook.com"}},
+      data_source:{"source":"3rd Party", "source_link":{"type":"url","name":"Facebook","url":"http://facebook.com"}},
       availability:"On Submission",
       data_recipient:{"name":"The Guardian", "source_link":{"url":"http://www.guardian.co.uk"}},
       location:"United Kingdom",
@@ -370,8 +370,10 @@ standardLabelSource.labels = {
 			data_source:{
 				source:"Web Form", 
 				source_link:{
+					"type":"onpage",
 					"name":"Search Box",
-					"selector":"input[name=q]"
+					"selector":"input[name=q]",
+					"parent_selector":"form"
 				}
 			},
 			availability:{

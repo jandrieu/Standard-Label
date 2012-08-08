@@ -20,6 +20,7 @@ $(document).ready(function() {
 		}
 	if(pivot)
 		addPivot(pivot);
+	$(".highlighter").on("click",highlight);
 });
 
 var extractData = function(uri) { 
@@ -171,22 +172,37 @@ var generateSharedData = function(data) {
 //      <td class="right" id="data_source"><span class="detail">3rd Party</span> (<a href='http://facebook.com'>Facebook http://facebook.com</a>)</td>
 var	generateDataSource = function(data) {
   html = "<span class='detail'>"+data.source+"</span>";
+debugger
 	if(data.source_link) {
-		html += "<span class='link'> (";
-		if(data.source_link.name) {
-  		html += data.source_link.name;
-			html += " ";
-		}
-		html+="<a target='_blank' href='";
-		if(data.source_link.url) {
-			html += data.source_link.url
-			html += "'>"; 
-			html += data.source_link.url;
-			html += "</a>)</span>";
-
-		} else if (data.source_link.selector) {
-			html += data.source_link.selector;
-			html += "' onclick='highlight()' >Show Me</a>)</span>"
+		switch(data.source_link.type) {
+			case "url":
+				html += "<span class='link'> (";
+				if(data.source_link.name) {
+					html += data.source_link.name;
+					html += " ";
+				}
+				html+="<a target='_blank'";
+				html += data.source_link.url
+				html += "'>"; 
+				html += data.source_link.url;
+				html += "</a>)</span>";
+				break;
+			case "onpage":
+				html += "<span class='link'> (";
+				if(data.source_link.name) {
+					html += data.source_link.name;
+					html += " ";
+				}
+				html+="<a class='highlighter' href='' data-selector='";
+				html += data.source_link.selector;
+				if(data.source_link.parent_selector) {
+					html += "' data-parent_selector='";
+					html += data.source_link.parent_selector;
+				}
+				html += "' >Show Me</a>)</span>"
+				break;
+			default:
+				console.log("UNKNOWN source_link TYPE in generateDataSource");
 		}
 	} 
 	$("#data_source").append($(html));
@@ -671,8 +687,20 @@ var testReading = function() {
 }
 
 var highlight = function(e) {
-	alert('highlighting' +$(this).attr("href"));
-	e.preventDefault();
+	console.log('highlighting ' +$(this).html());
+  $(this).css("border","thick black solid");
+	debugger
+//	e.preventDefault();
+	var selector = $(this).data("selector");
+	var parent_selector = $(this).data("parent_selector");
+	
+  chrome.tabs.getSelected(null, function(tab){
+		chrome.tabs.sendMessage(tab.id, { method:'highlight', "selector": { "item": selector, "parent": parent_selector}}, function(a){
+			 alert("send replied "+a);
+		});																				 
+	});
+
+	e.stopPropagation();
 	return false;
 }
 
