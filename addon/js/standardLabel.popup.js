@@ -199,7 +199,7 @@ debugger
 					html += "' data-parent_selector='";
 					html += data.source_link.parent_selector;
 				}
-				html += "' >Show Me</a>)</span>"
+				html += "' >Highlight</a>)</span>"
 				break;
 			default:
 				console.log("UNKNOWN source_link TYPE in generateDataSource");
