@@ -18,8 +18,14 @@ standardLabel.highlight = function(request,sender,callBack) {
 
 standardLabel.highlightSelector = function(selector) {
 	var $selection = standardLabel.getSelected(selector);
-	if($selection)
-		$selection.css("border", "thick black solid");
+	if($selection) {
+		var border = $selection.css("border");
+		console.log("highlighting. old border: "+border);
+		$selection.css("border","thick yellow solid");
+		setTimeout(function(){
+									$selection.css({ "border": border });
+								}, 1000);
+	}
 }
 
 standardLabel.getSelected = function(selector) {

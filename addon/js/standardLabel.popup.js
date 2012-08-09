@@ -687,9 +687,6 @@ var testReading = function() {
 }
 
 var highlight = function(e) {
-	console.log('highlighting ' +$(this).html());
-  $(this).css("border","thick black solid");
-	debugger
 //	e.preventDefault();
 	var selector = $(this).data("selector");
 	var parent_selector = $(this).data("parent_selector");
