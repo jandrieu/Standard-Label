@@ -373,7 +373,7 @@ standardLabelSource.labels = {
 					"type":"onpage",
 					"name":"Search Box",
 					"selector":"input[name=q]",
-					"parent_selector":"form"
+					"parent_selector":"td"
 				}
 			},
 			availability:{
