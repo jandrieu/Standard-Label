@@ -211,10 +211,19 @@ debugger
 //      availability:"On Submission",
 //			<td class="right" id="availability"></td>
 var	generateAvailability = function(data) {
+	var html;
 	switch(typeof data) {
 		case "string":
 			$("#availability").append(data);
 			break;
+		case "object":
+			if(data.standard_term) {
+				html = "<span class='standard_term'>";
+				html+= data.standard_term;
+				html+="</span>(<span class='detail'>";
+				html+= data.detail;
+				html+= "</span>)";
+			}
 		default:
 			console.log("unknown data type in generateAvailability : " + typeof data + ":" +JSON.stringify(data));
 	}

@@ -3,6 +3,8 @@ console.log("loading standardLabel.js");
 if(typeof standardLabel == "undefined")
 	var standardLabel = {};
 
+standardLabel.highlights = new Array();
+
 standardLabel.highlight = function(request,sender,callBack) {
 	if(request.method) {
 		switch(request.method) {
@@ -18,13 +20,16 @@ standardLabel.highlight = function(request,sender,callBack) {
 
 standardLabel.highlightSelector = function(selector) {
 	var $selection = standardLabel.getSelected(selector);
+	
 	if($selection) {
 		var border = $selection.css("border");
+		standardLabel.highlights.push(border);
+
 		console.log("highlighting. old border: "+border);
 		$selection.css("border","thick yellow solid");
-		setTimeout(function(){
-									$selection.css({ "border": border });
-								}, 1000);
+		standardLabel.highlight.push(setTimeout(function(){
+									$selection.css({ "border": standardLabel.highlights.pop()});
+								}, 1000));
 	}
 }
 
