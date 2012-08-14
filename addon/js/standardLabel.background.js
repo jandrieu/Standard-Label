@@ -381,9 +381,9 @@ standardLabelSource.labels = {
 				detail:"as you type"
 			},
 			data_recipient:{
-				name:"The Guardian", 
+				name:"Google, Inc.", 
 				source_link:{
-					url:"http://www.guardian.co.uk"
+					url:"http://www.google.com"
 				}, 
 				citation:{
 					url:"http://www.google.com/goodtoknow/data-on-google/search-logs/",
@@ -399,7 +399,7 @@ standardLabelSource.labels = {
 			},
 			contact:[{
 				type:"page",
-				data:"http://www.google.com/contact/"
+				url:"http://www.google.com/contact/"
 			}],
 			purpose:"Recommend web pages",
 			for_how_long:{
@@ -414,7 +414,7 @@ standardLabelSource.labels = {
 				detail:"Search Results"
 			},
 			revocation:{
-				description:"Revocable for services. Non-revocable logs retained for analytics, auditing, and service improvement. ", 
+				description:"Partially revocable. Non-revocable logs retained for analytics, auditing, and service improvement. ", 
 				url:"https://www.google.com/history/", 
 				citation:{
 					url:"https://www.google.com/intl/en/policies/privacy/#nosharing",
@@ -422,7 +422,7 @@ standardLabelSource.labels = {
 				}
 			},
 			redistribution:{
-				term:"External processing in confidence, protect the public, due process, administrators, with consent. Aggregated, non-PII with partners.", 
+				term:"External processing in confidence, to protect the public, due process, administrators, with consent. Aggregated, non-PII with partners.", 
 				citation:{
 					url:"https://www.google.com/intl/en/policies/privacy/#nosharing",
 					access_date:"2012-07-25"
@@ -432,7 +432,10 @@ standardLabelSource.labels = {
 				url:"https://www.google.com/dashboard/"
 			},
 			additional_terms: {
-				term:"Statistical Aggregation (Search Trends), Promotional Offers (ad network optimization)", 
+				term:[ { standard_term : "Statistical Aggregation",
+								 detail : "Search Trends" },
+							 { standard_term : "Promotional Offers",
+							   detail : "ad network optimization"}],
 				citation:{
 					url:"https://www.google.com/intl/en/policies/privacy/#nosharing",
 					access_date:"2012-07-25"}
@@ -639,7 +642,7 @@ standardLabelTester.test = function() {
 		console.log("************************\nStandard Label tests FAILED!\n************************");
 	else
 		console.log("Standard Label tests passed.");
-	
+
 };
 
 standardLabelTester.test();

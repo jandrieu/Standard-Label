@@ -139,3 +139,12 @@ div.third_party img{
 	width: 32px;
 	height: 32px;
 }
+
+a.citation {
+	text-decoration: none;
+	color: #3C0;
+}
+
+a.citation:hover {
+	text-decoration: underline;
+}

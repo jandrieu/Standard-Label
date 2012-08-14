@@ -83,7 +83,7 @@ var generateLabel = function(label) {
 	generateAvailability(label.availability);
 	generateDataRecipient(label.data_recipient);
 	generateLocation(label.location);
-	generateContact(label.contact);
+	generateContacts(label.contact);
 	generatePurpose(label.purpose);
 	generateForHowLong(label.for_how_long);
 	generateOutputTo(label.output_to);
@@ -211,22 +211,26 @@ debugger
 //      availability:"On Submission",
 //			<td class="right" id="availability"></td>
 var	generateAvailability = function(data) {
+
 	var html;
 	switch(typeof data) {
 		case "string":
-			$("#availability").append(data);
+			html = data;
 			break;
 		case "object":
 			if(data.standard_term) {
-				html = "<span class='standard_term'>";
+				html = "<span><span class='standard_term'>";
 				html+= data.standard_term;
-				html+="</span>(<span class='detail'>";
+				html+="</span> (<span class='detail'>";
 				html+= data.detail;
-				html+= "</span>)";
+				html+= "</span>)</span>";
 			}
+			break;
 		default:
 			console.log("unknown data type in generateAvailability : " + typeof data + ":" +JSON.stringify(data));
 	}
+	$("#availability").append($(html));
+
 }
 
 //      data_recipient:{"name":"The Guardian", "source_link":{"url":"http://www.guardian.co.uk"}},
@@ -250,9 +254,18 @@ var	generateDataRecipient = function(data) {
 //      location:"United Kingdom",
 //			<td class="right" id="location"></td>
 var	generateLocation = function(data) {
+	var html;
 	switch(typeof data) {
 		case "string":
 			$("#location").append(data);
+			break;
+		case "object":
+		  html = "<div><span class='term'>";
+			html += data.term;
+			html += "</span>";
+			html += generateCitation(data.citation);
+			html += "</div>"
+			$("#location").append($(html));
 			break;
 		default:
 			console.log("unknown data type in generateLocation : " + typeof data + ":" +JSON.stringify(data));
@@ -261,11 +274,12 @@ var	generateLocation = function(data) {
 
 //      contact:[{"type":"page","url":"http://www.guardian.co.uk/help/contact-us"}],
 //			<td class="right" id="contact"></td>
-var	generateContact = function(data) {
+
+var	generateContacts = function(data) {
   var html;
 	var contact;
-	
-  switch(typeof data) {
+
+	switch(typeof data) {
     case "string":
     	$("#contact").append(data);
     	break;
@@ -273,117 +287,242 @@ var	generateContact = function(data) {
     	if (data instanceof Array) {
     		html = "<div class='contacts'>";
   			for(i=0;i<data.length;i++) {
-  				contact = data[i];
-        	switch(contact.type) {
-        		case "page" : 
-              html+= "<div class='contact'><a href='"
-        				+contact.url
-        				+"' target='_blank'>"
-        				+contact.url
-        				+"</a></div>";
-        			break;
-        		default:
-        			console.log("unknown data type in generateContact: "+contact.type);
-        	}
+					html+=generateContact(data[i]);
 				}
       	html += "</div>";
-      	$("#contact").append($(html));
-      } else {
-       	console.log("unknown object type in generateContact: "+data);
+			} else {
+				html= generateContact(data);
       }
   		break;
 		default:
-    	console.log("unknown data type in generateContact: "+data.type);
+    	console.log("unknown data type in generateContacts: "+ (typeof data));
 	}
+
+ 	$("#contact").append($(html));
 }
+
+var	generateContact = function(contact) {
+	var html = "<div class='contact'>";
+	switch(contact.type) {
+		case "page" : 
+			html+= "<a href='"
+				+contact.url
+				+"' target='_blank'>"
+				+contact.url
+				+"</a></div>";
+			break;
+		default:
+			console.log("unknown data type in generateContact: "+contact.type);
+	}
+	
+	html+= "</div>";
+	return html;
+}
+
+
 
 //      purpose:"This app may post on your behalf, including videos you watched, articles you read and more.",
 //			<td class="right" id="purpose"></td>
 var	generatePurpose = function(data) {
+	var	html = "<span class='purpose'>";
 	switch(typeof data) {
 		case "string":
-			$("#purpose").append(data);
+			html += data;
+			break;
+		case "object":
+			html += "<span class='term'>";
+			html += data.term;
+			html += "</span>"
+			html += generateCitation(data.citation);
 			break;
 		default:
 			console.log("unknown data type in generatePurpose : " + typeof data + ":" +JSON.stringify(data));
 	}
+	html += "</span>"
+	
+	$("#purpose").append(html);
+	
 }
 
 //      for_how_long:"Indefinite.",
 //			<td class="right" id="for_how_long"></td>
 var	generateForHowLong = function(data) {
+	var	html = "<span class='forHowLong'>";
 	switch(typeof data) {
 		case "string":
-			$("#for_how_long").append(data);
+			html += data;
+			break;
+		case "object":
+			html += "<span class='term'>";
+			html += data.term;
+			html += "</span>"
+			html += generateCitation(data.citation);
 			break;
 		default:
-			console.log("unknown data type in generateForHowLong : " + typeof data + ":" +JSON.stringify(data));
+			console.log("unknown data type in generateForHowLong : " + (typeof data) + ":" +JSON.stringify(data));
 	}
-}
+	html += "</span>"
 
+	$("#for_how_long").append(html);
+}
+	
 //      output_to:"Posts to your Facebook wall",
 //			<td class="right" id="output_to"></td>
 var	generateOutputTo = function(data) {
+	var html;
+
 	switch(typeof data) {
 		case "string":
-			$("#output_to").append(data);
+			html = "<span class='outputTo'>";
+			html += data;
+			html += "</span>";
+			break;
+		case "object":
+			if(data.standard_term) {
+				html += generateStandardTerm(data);
+			}
 			break;
 		default:
 			console.log("unknown data type in generateOutputTo : " + typeof data + ":" +JSON.stringify(data));
 	}
+	$("#output_to").append($(html));
+			
 }
 
+
+var generateStandardTerm = function(data) {
+	var html;
+	html = "<span class='outputTo'><span class='standard_term'>";
+	html+= data.standard_term;
+	html+="</span> (<span class='detail'>";
+	html+= data.detail;
+	html+= "</span>)</span>";
+	return html;
+}
 
 //      revocation:"Facebook permissions may be revoked. Data may be retained by The Guardian.",
 //			<td class="right" id="revocation"></td>
 var	generateRevocation = function(data) {
+	var html;
 	switch(typeof data) {
 		case "string":
-			$("#revocation").append(data);
+			html = data;
+			break;
+		case "object":
+			html = "<span class='revocation'><span class='description'>";
+			html += data.description;
+			html += "</span> ";
+			html += "<a target='_blank' href='";
+			html += data.url;
+			html += "'>";
+			html += data.url;
+			html += "</a>";
+			html += generateCitation(data.citation);
 			break;
 		default:
 			console.log("unknown data type in generateRevocation : " + typeof data + ":" +JSON.stringify(data));
 	}
+	
+	$("#revocation").append(html);
 }
 
 
 //      redistribution:"Unknown",
 //			<td class="right" id="redistribution"></td>
 var	generateRedistribution = function(data) {
+	var	html = "<span class='redistribution'>";
 	switch(typeof data) {
 		case "string":
-			$("#redistribution").append(data);
+			html += data;
+			break;
+		case "object":
+			html += "<span class='term'>";
+			html += data.term;
+			html += "</span>"
+			html += generateCitation(data.citation);
 			break;
 		default:
 			console.log("unknown data type in generateRedistribution : " + typeof data + ":" +JSON.stringify(data));
 	}
+	html += "</span>"
+
+	$("#redistribution").append(html);
+
 }
 
 //      access:"Unknown",
 //			<td class="right" id="access"></td>
 var	generateAccess = function(data) {
+	var html;
 	switch(typeof data) {
 		case "string":
-			$("#access").append(data);
+			html = data;
+			break;
+		case "object":
+		  if(data.url) {
+				html = "<a target=_blank href='";
+				html += data.url;
+				html += "'>";
+				html += data.url;
+				html += "</a>";
+			}
 			break;
 		default:
 			console.log("unknown data type in generateAccess : " + typeof data + ":" +JSON.stringify(data));
 	}
+	
+	$("#access").append(html);
 }
 
 //      additional_terms: undefined,
 //			<td class="right" id="additional_terms"></td>
+
+//object:{"term":[{"standard_term":"Statistical Aggregation","detail":"Search Trends"},{"standard_term":"Promotional Offers","detail":"ad network optimization"}],"citation":{"url":"https://www.google.com/intl/en/policies/privacy/#nosharing","access_date":"2012-07-25"}} 
+
 var generateAdditionalTerms = function(data) {
+	var html = "";
 	switch(typeof data) {
 		case "string":
-			$("#additional_terms").append(data);
+		  html = data;
+			break;
+		case "object":
+			if (data.term instanceof Array) {
+				for(i=0;i<data.term.length;i++) {
+						term = data.term[i];
+						if(term.standard_term) {
+							html += generateStandardTerm(term);
+						} else {
+							html += "<span class='term'>";
+							html += term;
+							html += "</span>";
+						}
+				} 
+			} else {
+					if(data.term) {
+						if(data.term.standard_term) {
+							html += generateStandardTerm(data.term);
+						} else {
+							html += data.term;
+						}
+					} else {
+						console.log("unknown object type in generateAdditionalTerms : " + (typeof data) + ":" +JSON.stringify(data));
+					}
+			}
+			
+			if(data.citation) {
+				html += generateCitation(data.citation);
+			}
+			
 			break;
 		case "undefined" :
-		  $("#additional_terms").append("not available");
+		  html = "not available";
 			break;
 		default:
 			console.log("unknown data type in generateAdditionalTerms : " + typeof data + ":" +JSON.stringify(data));
 	}
+	
+	$("#additional_terms").append(html);
+
 }
 
 //      related_agreements:[
@@ -493,6 +632,20 @@ var	generateAuthor = function(data) {
 					+"</a>)</div>";
 	$("#author").append($(html));
 }
+
+var generateCitation = function(data) {
+	html = "";
+	if(data) {
+		html = " <a class='citation' target='_blank' title='";
+		html += data.url + " (" + data.access_date + ")";
+		html += "' href='";
+		html += data.url;
+		html += "'>&#187;</a>";
+	} 
+	
+	return html;
+}
+
 
 /* set hover events for rating iframes */
 // we do this by showing it immediately, but delaying the hide
