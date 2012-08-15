@@ -486,33 +486,38 @@ var generateAdditionalTerms = function(data) {
 		  html = data;
 			break;
 		case "object":
-			if (data.term instanceof Array) {
-				for(i=0;i<data.term.length;i++) {
-						term = data.term[i];
+			if (data instanceof Array) {
+				html = "<ol>";
+				for(i=0;i<data.length;i++) {
+						term = data[i];
 						if(term.standard_term) {
+							html += "<li>";
 							html += generateStandardTerm(term);
+							if(term.citation) {
+								html+=generateCitation(term.citation);
+							}
+							html += "</li>";
 						} else {
-							html += "<span class='term'>";
+							html += "<li class='term'>";
 							html += term;
-							html += "</span>";
+							if(term.citation) {
+								html+=generateCitation(term.citation);
+							}
+							html += "</li>";
 						}
 				} 
+				html += "</ol>";
 			} else {
-					if(data.term) {
-						if(data.term.standard_term) {
-							html += generateStandardTerm(data.term);
-						} else {
-							html += data.term;
+					if(data.standard_term) {
+						html += generateStandardTerm(data);
+						if(data.citation) {
+							html+=generateCitation(data.citation);
 						}
 					} else {
 						console.log("unknown object type in generateAdditionalTerms : " + (typeof data) + ":" +JSON.stringify(data));
 					}
 			}
-			
-			if(data.citation) {
-				html += generateCitation(data.citation);
-			}
-			
+		
 			break;
 		case "undefined" :
 		  html = "not available";
@@ -536,20 +541,26 @@ var	generateRelatedAgreements = function(data) {
 			break;
 		case "object":
 			if (data instanceof Array) {
+				html += "<ol class='related_agreements'>";
   			for(i=0;i<data.length;i++) {
 				  agreement = data[i];
-  				html = "<a class='related_agreement' href='"+agreement.url+"'>"
-						+agreement.name +" ("
-						+agreement.url+")</a>";
-  				$("#related_agreements").append($(html));
+					html += "<li class='related_agreement'><span class='related_agreement'>";
+					html += agreement.name;
+					html += "</span>";
+  				html += generateCitation(agreement.citation);
+					html += "</li>";
   			}
 			} else {
-				console.log("unknown object instance in related_agreements : " + typeof data + ":" +JSON.stringify(data));
+					html = "<span class='related_agreement'>";
+					html += data.name;
+					html += "</span>";
+  				html += generateCitation(data.citation);
 			}
 			break;
 		default:
 			console.log("unknown data type in related_agreements : " + typeof data + ":" +JSON.stringify(data));
 	}
+	$("#related_agreements").append($(html));
 }
 
 //      third_party_ratings:[

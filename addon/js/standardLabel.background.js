@@ -431,21 +431,31 @@ standardLabelSource.labels = {
 			access:{
 				url:"https://www.google.com/dashboard/"
 			},
-			additional_terms: {
-				term:[ { standard_term : "Statistical Aggregation",
-								 detail : "Search Trends" },
-							 { standard_term : "Promotional Offers",
-							   detail : "ad network optimization"}],
-				citation:{
-					url:"https://www.google.com/intl/en/policies/privacy/#nosharing",
-					access_date:"2012-07-25"}
-				},
+			additional_terms: [{
+													standard_term : "Statistical Aggregation",
+													detail : "Search Trends" ,
+													citation: {
+														url : "https://www.google.com/intl/en/policies/privacy/#nosharing",
+														access_date : "2012-07-25"}
+												},{
+													standard_term : "Promotional Offers",
+													detail : "ad network optimization",
+													citation: {
+														url : "https://www.google.com/intl/en/policies/privacy/#infouse",
+														access_date : "2012-07-25"}
+												}],
 			related_agreements:[{
 				name:"Privacy Policy",
-				url:"https://www.google.com/intl/en/policies/privacy/"
+				citation: {
+					url:"https://www.google.com/intl/en/policies/privacy/",
+					access_date: "2012-07-25"
+				}
 			},{
 				name:"Google Terms of Service",
-				url:"https://www.google.com/intl/en/policies/terms/"
+				citation: {
+					url:"https://www.google.com/intl/en/policies/terms/",
+					access_date: "2012-07-25"
+				}
 			}],
 			third_party_ratings:[{
 				name:"Mozilla",
