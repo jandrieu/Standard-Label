@@ -329,7 +329,7 @@ standardLabelSource.labels = {
   	"labelData" : 
 		{
 			type: "facebook",
-      requested_data:[
+      shared_data:[
     		"Your basic info (name, profile picture, gender, networks, user ID, list of friends, any other information you made public)",
       	"Your e-mail address",
       	"Your birthday",
@@ -346,7 +346,10 @@ standardLabelSource.labels = {
       redistribution:"Unknown",
       access:"Unknown",
       related_agreements:[
-    		{"name":"The Guardian Facebook app terms of service","url":"http://www.guardian.co.uk/info/2011/sep/22/2?fb=native"},{"name":"The Guardian Website Terms of Service","url":"http://www.guardian.co.uk/help/terms-of-service"}],
+    		{ "name":"The Guardian Facebook app terms of service",
+				  "citation": {
+						"url":"http://www.guardian.co.uk/info/2011/sep/22/2?fb=native"
+					},{"name":"The Guardian Website Terms of Service","url":"http://www.guardian.co.uk/help/terms-of-service"}],
       third_party_ratings:[
     		{"name":"Mozilla",
 				  "id" :"mozilla_privacy",
@@ -357,7 +360,7 @@ standardLabelSource.labels = {
     			"url":"https://showmefirst.info/ratings/cake/theguardian.html",
     			"icon":"https://showmefirst.info/ratings/cake/cake.png"}],
       author:{"service":"The Standard Crowd","author":"Joe Andrieu","url":"http://standardlabel.org/crowd/joeandrieu"},
-			version:"http://standardlabel.org/v0.3"
+			version:"http://standardlabel.org/v/0.5"
     }
 		}],
 	"google_search" : {

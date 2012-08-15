@@ -215,7 +215,9 @@ var	generateAvailability = function(data) {
 	var html;
 	switch(typeof data) {
 		case "string":
-			html = data;
+			html = "<span class='availability'>";
+			html += data;
+			html += "</span>";
 			break;
 		case "object":
 			if(data.standard_term) {
