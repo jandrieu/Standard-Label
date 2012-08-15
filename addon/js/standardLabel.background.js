@@ -348,8 +348,14 @@ standardLabelSource.labels = {
       related_agreements:[
     		{ "name":"The Guardian Facebook app terms of service",
 				  "citation": {
-						"url":"http://www.guardian.co.uk/info/2011/sep/22/2?fb=native"
-					},{"name":"The Guardian Website Terms of Service","url":"http://www.guardian.co.uk/help/terms-of-service"}],
+						"url":"http://www.guardian.co.uk/info/2011/sep/22/2?fb=native",
+						access_date:"2012-07-25"
+					}},
+				{ "name":"The Guardian Website Terms of Service",
+				  "citation": {
+						"url":"http://www.guardian.co.uk/help/terms-of-service",
+						access_date:"2012-07-25"
+					}}],
       third_party_ratings:[
     		{"name":"Mozilla",
 				  "id" :"mozilla_privacy",
