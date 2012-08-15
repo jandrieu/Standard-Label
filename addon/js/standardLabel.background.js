@@ -356,7 +356,6 @@ standardLabelSource.labels = {
 				  "id" :"cake_is_a_lie",
     			"url":"https://showmefirst.info/ratings/cake/theguardian.html",
     			"icon":"https://showmefirst.info/ratings/cake/cake.png"}],
-      record:"This agreement will not be stored.",
       author:{"service":"The Standard Crowd","author":"Joe Andrieu","url":"http://standardlabel.org/crowd/joeandrieu"},
 			version:"http://standardlabel.org/v0.3"
     }
@@ -459,7 +458,7 @@ standardLabelSource.labels = {
 			}],
 			third_party_ratings:[{
 				name:"Mozilla",
-				url:"http://mozilla.com/privacyIcons/Guardian",
+				url: "https://showmefirst.info/ratings/mozilla/google.html",
 				icon:"https://wiki.mozilla.org/images/thumb/f/fb/Privacyiconslogo.png/100px-Privacyiconslogo.png"
 			}],
 			author:{
