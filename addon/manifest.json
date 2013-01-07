@@ -1,11 +1,10 @@
 {
   "name": "Standard Label Addon",
   "version": "0.1",
-  "manifest_version": 1,
+  "manifest_version": 2,
   "description": "A Universal Addon for the Standard Information Sharing Label",
   "content_scripts" : [{
       "matches": ["http://*/*", "https://*/*"],
-//      "css" : ["css/standardLabel.css"], 
       "js" : ["lib/jquery-1.7.2.min.js","js/standardLabel.injection.js"]
   }],
   "browser_action": {
@@ -14,7 +13,11 @@
     "default_title": "Standard Label"      // optional; shown in tooltip
   },
   "background": {
-    "scripts": ["js/standardLabel.background.js"]
+    "scripts": [
+			"lib/jquery-1.7.2.min.js",
+//			"http://standardlabel.org/labels/labels.js",
+//			"http://standardlabel.org/intercepts/intercepts.js",
+			"js/standardLabel.background.js"]
   },
-  "permissions": ["tabs", "http://www.facebook.com/", "https://www.facebook.com/"]
+  "permissions": ["tabs", "http://standardlabel.org/", "https://standardlabel.org/"]
 }

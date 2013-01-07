@@ -88,198 +88,56 @@ chrome.extension.onMessage.addListener(
 
 var standardLabelSource = {};
 
-standardLabelSource.urlIntercepts = [{
-				hit : /^https:\/\/www\.facebook\.com\/dialog\/oauth/,
-				extract : /redirect_uri=([^&]*)(?:&|$)/,
-				name : "Facebook OAuth Permissions",
-				handler : "facebook",  
-				id : "facebook", // must be unique
-				tests: [
-					{	
-						name: "basic facebook extraction #1",
-						data:"https://www.facebook.com/dialog/oauth?client_id=180444840287&redirect_uri=http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads&scope=publish_actions,email,user_birthday,user_location",
-						isMatch: true,
-						extraction:"http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads"
-					},
-					{	
-						name: "basic facebook extraction #2",
-						data: "https://www.facbook.com/dialog/oauth?client_id=180444840287&redirect_uri=http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads&scope=publish_actions,email,user_birthday,user_location",
-						isMatch: false,
-						extraction: undefined
-					}
-				]	
-				},
-				{
-				hit : /^file:\/\/\/c:\/Users\/Joe\/Documents\/GitHub\/Standard-Label\/plugin\/test\.FB\.OAuth\.htm/i,
-				extract : /redirect_uri=([^&]*)(?:&|$)/,
-				name : "Facebook OAuth Test Page1",
-				handler: "facebook",
-				id : "facebookTest2", // must be unique
-				tests: [
-					{	
-						name: "basic facebook TEST extraction #1",
-        		data:"file:///c:/Users/Joe/Documents/GitHub/Standard-Label/plugin/test.FB.OAuth.htm"
-,
-						isMatch: true
-					},
-					{	
-						name: "basic facebook TEST extraction #2",
-		data:"file:///C:/Users/Joe/Documents/GitHub/Standard-Label/plugin/test.FB.OAuth.htm?client_id=180444840287&redirect_uri=http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads&scope=publish_actions,email,user_birthday,user_location"
-,
-						isMatch: true,
-						extraction:"http%3A%2F%2Fapps.facebook.com%2Ftheguardian%2Fauthenticated%2Fcommentisfree%2F2012%2Fjul%2F08%2Fandy-murray-not-miserable-just-normal%3Ffb_source%3Dother_multiline%26fb_action_types%3Dnews.reads"
-					}
-
-				]	
-				},{
-				hit : /^https:\/\/www\.facebook\.com\/connect\/uiserver\.php\?.*&method=permissions.request/,
-				extract : /redirect_uri=([^&]*)(?:&|$)/,
-				name : "Facebook Permissions through UIServer Page",
-				handler: "facebook",
-				id : "facebook2",
-				tests : [
-				    {
-				      name: "Facebook UIServer extraction 1",
-							data : "https://www.facebook.com/connect/uiserver.php?app_id=225496380820004&method=permissions.request&redirect_uri=https%3A%2F%2Fapps.facebook.com%2Fsimcitysocial%2F%3Fpf_ref%3Dx1027_US_NNG-US-M-18-137--6974%26nan_pid%3D70097715&response_type=none&display=page&auth_referral=1",
-							isMatch : true,
-							extraction : "https%3A%2F%2Fapps.facebook.com%2Fsimcitysocial%2F%3Fpf_ref%3Dx1027_US_NNG-US-M-18-137--6974%26nan_pid%3D70097715"
-             }]
-         },
-				{
-				hit : /http(s|):\/\/www\.google\.com($|\/$|\/search\?|\/$|\/webhp|\/#)/,
-				comment: "Should capture all google.com search URLs and google.com by itself, and /webhp and /#, but no other google URLs",
-				name : "Google Search",
-				handler: "google_search",
-				id : "google_search", // must be unique
-				tests: [
-					{	
-						name: "Google Home Page with slash",
-						data: "https://www.google.com/",
-						isMatch: true
-					},{
-						name: "google result problematic",
-						data: "https://www.google.com/#q=London+2012+javelin&oi=ddle&ct=javelin-2012-hp&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&fp=3caf70095441cb5a&biw=1110&bih=763",
-						isMatch: true // failing test
-					},{
-						name: "Google doodle clickthrough",
-						data: "https://www.google.com/webhp?hl=en&tab=ww&authuser=0#q=London+2012+hurdles&oi=ddle&ct=hurdles-2012-hp&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.&fp=3caf70095441cb5a&biw=1110&bih=763",
-						isMatch: true
-					},{	
-						name: "Google Home Page",
-						data: "https://www.google.com",
-						isMatch: true
-					},{
-						name: "Embedded Google.com",
-						data: "https://www.joeandrieu.com/test&q=http://google.com",
-						isMatch :false
-					},{	
-						name: "",
-						data: "https://www.google.com/search? sourceid=chrome&ie=UTF-8&q=wacaca",
-						isMatch: true,
-					},{	
-						name: "",
-						data: "http://example.com/google.com/cheese",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "https://www.google.com/calendar/render",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://docs.google.com",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "https://www.google.com/search?sourceid=chrome&ie=UTF-8&q=testy",
-						isMatch: true,
-					},					{	
-						name: "",
-						data: "https://www.google.com/search?hl=en&q=news&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.,cf.osb&biw=1024&bih=538&um=1&ie=UTF-8&tbm=isch&source=og&sa=N&tab=wi&ei=31sRUPjDMaPl0QHD4oDgAQ",
-						isMatch: true,
-					},{	
-						name: "",
-						data: "https://mail.google.com/mail/u/0/",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/mobile/?tab=wD",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "https://www.google.com/offers/home?utm_source=xsell&utm_medium=products&utm_campaign=sandbar&tab=wG#!details",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/shopping?hl=en&tab=Gf",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/finance?tab=ye",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "https://www.google.com/latitude/b/0?hl=en",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "https://www.google.com/calendar/render?hl=en&pli=1",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/talk/",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/wallet/#utm_source=EMB&utm_medium=emb-more&utm_campaign=en-US",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/wallet/#utm_source=EMB&utm_medium=emb-more&utm_campaign=en-US",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "https://accounts.google.com/ServiceLogin?service=orkut&continue=http%3A%2F%2Fwww.orkut.com&n hl=en",
-						isMatch: false,
-					},{	
-						name: "", 
-						data: "http://www.google.com/reader/view/?hl=en&source=mmm-en#overview-page",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/cse/?hl=en",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://scholar.google.com/schhp?hl=en",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/trends/",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/alerts?hl=en",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/finance",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "https://www.google.com/?tbm=pts&hl=e",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/blogsearch?hl=en",
-						isMatch: false,
-					},{	
-						name: "",
-						data: "http://www.google.com/fusiontables/Home/",
-						isMatch: false,
-					}
-					]	
-				}];
-
+standardLabel.loadIntercepts = function(callback) {
+	var url = "http://standardlabel.org/intercepts/intercepts.json";
+	$.ajax({
+		url: url,
+		dataType: "json",
+		crossDomain: true,
+		error: function(jqXHR, textStatus, error){
+		 console.log("Failed to get intercepts from "
+								 +url
+								 +" status: "
+								 +textStatus
+								 +" error: "
+								 +JSON.stringify(error));
+		},
+		success: function(data, textStatus, jqXHR){
+		 console.log("Got intercepts from "
+								 +url
+								 +" status: "
+								 +textStatus);
+			
+			if(typeof data != "object") {
+				console.log("unknown data type in standardLabel.loadIntercepts");
+				if(callback && typeof callback == "function") 
+				  callback();
+				else
+				  return;
+			}
+			
+			if(!(data instanceof Array)) {
+				console.log("unknown object type in standardLabel.loadIntercepts");
+				if(callback && typeof callback == "function") 
+				  callback();
+				else
+				  return;
+		  }
+			// first, pre-process all regex fields
+			for(i=0;i<data.length;i++) {
+				if(data[i].hit)
+					data[i].hit = new RegExp(data[i].hit,"i");
+				if(data[i].extract)
+					data[i].extract = new RegExp(data[i].extract,"i");
+			}
+			standardLabelSource.urlIntercepts = data;
+			if(callback && typeof callback == "function") 
+			  callback();
+			else
+			  return;
+		}
+	});			 
+};
 
 standardLabel.checkOAuth = function(url) {
 	// a simple look up to test if the current URL is a known OAuth transaction.
@@ -316,167 +174,90 @@ standardLabel.checkOAuth = function(url) {
 
 // labels are provided as arrays keyed to their handler
 // so, all Facebook apps are indexed to "facebook"
-standardLabelSource.labels = {	
-	"facebook" : [{
-  	"name": "Guardian Facebook App",
-  	"id": "facebook_guardian",
-  	"redirectRx": /^http:\/\/apps\.facebook\.com\/theguardian/,
-  	"tests": [{
-  				      name: "Guardian Facebook App redirect",
-  							data : "http://apps.facebook.com/theguardian/authenticated/commentisfree/2012/jul/08/andy-murray-not-miserable-just-normal?fb_source=other_multiline&fb_action_types=news.reads",
-  							isMatch : true
-              }],
-  	"labelData" : 
-		{
-			type: "facebook",
-      shared_data:[
-    		"Your basic info (name, profile picture, gender, networks, user ID, list of friends, any other information you made public)",
-      	"Your e-mail address",
-      	"Your birthday",
-      	"Your location"],
-      data_source:{"source":"3rd Party", "source_link":{"type":"url","name":"Facebook","url":"http://facebook.com"}},
-      availability:"On Submission",
-      data_recipient:{"name":"The Guardian", "source_link":{"url":"http://www.guardian.co.uk"}},
-      location:"United Kingdom",
-      contact:[{"type":"page","url":"http://www.guardian.co.uk/help/contact-us"}],
-      purpose:"This app may post on your behalf, including videos you watched, articles you read and more.",
-      for_how_long:"Indefinite.",
-      output_to:"Posts to your Facebook wall",
-      revocation:"Facebook permissions may be revoked. Data may be retained by The Guardian.",
-      redistribution:"Unknown",
-      access:"Unknown",
-      related_agreements:[
-    		{ "name":"The Guardian Facebook app terms of service",
-				  "citation": {
-						"url":"http://www.guardian.co.uk/info/2011/sep/22/2?fb=native",
-						access_date:"2012-07-25"
-					}},
-				{ "name":"The Guardian Website Terms of Service",
-				  "citation": {
-						"url":"http://www.guardian.co.uk/help/terms-of-service",
-						access_date:"2012-07-25"
-					}}],
-      third_party_ratings:[
-    		{"name":"Mozilla",
-				  "id" :"mozilla_privacy",
-    			"url":"https://showmefirst.info/ratings/mozilla/theguardian.html",
-    			"icon":"https://wiki.mozilla.org/images/thumb/f/fb/Privacyiconslogo.png/100px-Privacyiconslogo.png"},
-    		{"name":"The Cake is a Lie",
-				  "id" :"cake_is_a_lie",
-    			"url":"https://showmefirst.info/ratings/cake/theguardian.html",
-    			"icon":"https://showmefirst.info/ratings/cake/cake.png"}],
-      author:{"service":"The Standard Crowd","author":"Joe Andrieu","url":"http://standardlabel.org/crowd/joeandrieu"},
-			version:"http://standardlabel.org/v/0.5"
-    }
-		}],
-	"google_search" : {
-		name: "Google Search",
-		id: "google_search",
-		labelData : {
-			type: "google",
-			shared_data:"Search Terms",
-			data_source:{
-				source:"Web Form", 
-				source_link:{
-					"type":"onpage",
-					"name":"Search Box",
-					"selector":"input[name=q]",
-					"parent_selector":"td"
-				}
-			},
-			availability:{
-				standard_term:"Interactive", 
-				detail:"as you type"
-			},
-			data_recipient:{
-				name:"Google, Inc.", 
-				source_link:{
-					url:"http://www.google.com"
-				}, 
-				citation:{
-					url:"http://www.google.com/goodtoknow/data-on-google/search-logs/",
-					access_date:"2012-07-25"
-				}
-			},
-			location:{
-				term:"California, United States; Finland; Belgium; Singapore; Hong Kong; Taiwan", 
-				citation:{
-					url:"http://www.google.com/goodtoknow/data-on-google/search-logs/",
-					access_date:"2012-07-25"
-				}
-			},
-			contact:[{
-				type:"page",
-				url:"http://www.google.com/contact/"
-			}],
-			purpose:"Recommend web pages",
-			for_how_long:{
-				term:"Indefinitely. Anonymized when removed.", 
-				citation:{
-					url:"http://www.google.com/goodtoknow/data-on-google/search-logs/",
-					access_date:"2012-07-25"
-				}
-			},
-			output_to:{
-				standard_term:"Current Web Page", 
-				detail:"Search Results"
-			},
-			revocation:{
-				description:"Partially revocable. Non-revocable logs retained for analytics, auditing, and service improvement. ", 
-				url:"https://www.google.com/history/", 
-				citation:{
-					url:"https://www.google.com/intl/en/policies/privacy/#nosharing",
-					access_date:"2012-07-25"
-				}
-			},
-			redistribution:{
-				term:"External processing in confidence, to protect the public, due process, administrators, with consent. Aggregated, non-PII with partners.", 
-				citation:{
-					url:"https://www.google.com/intl/en/policies/privacy/#nosharing",
-					access_date:"2012-07-25"
-				}
-			},
-			access:{
-				url:"https://www.google.com/dashboard/"
-			},
-			additional_terms: [{
-													standard_term : "Statistical Aggregation",
-													detail : "Search Trends" ,
-													citation: {
-														url : "https://www.google.com/intl/en/policies/privacy/#nosharing",
-														access_date : "2012-07-25"}
-												},{
-													standard_term : "Promotional Offers",
-													detail : "ad network optimization",
-													citation: {
-														url : "https://www.google.com/intl/en/policies/privacy/#infouse",
-														access_date : "2012-07-25"}
-												}],
-			related_agreements:[{
-				name:"Privacy Policy",
-				citation: {
-					url:"https://www.google.com/intl/en/policies/privacy/",
-					access_date: "2012-07-25"
-				}
-			},{
-				name:"Google Terms of Service",
-				citation: {
-					url:"https://www.google.com/intl/en/policies/terms/",
-					access_date: "2012-07-25"
-				}
-			}],
-			third_party_ratings:[{
-				name:"Mozilla",
-				url: "https://showmefirst.info/ratings/mozilla/google.html",
-				icon:"https://wiki.mozilla.org/images/thumb/f/fb/Privacyiconslogo.png/100px-Privacyiconslogo.png"
-			}],
-			author:{
-				service:"The Standard Crowd",
-				author:"Joe Andrieu",
-				url:"http://standardlabel.org/crowd/joeandrieu"
-			},
-			version:"http://standardlabel.org/v0.5"
+// sstandardLabelSource.labels = 
+
+standardLabel.loadLabels = function(callback) {
+	var url = "http://standardlabel.org/labels/labels.js";
+	
+//	var xhr = new XMLHttpRequest();
+//	var j;
+//	xhr.open("GET", url, true);
+//	xhr.onreadystatechange = function() {
+//		if (xhr.readyState == 4) {
+//			console.log(xhr.responseText);
+//			try {
+//				j = JSON.parse(xhr.responseText);
+//			}
+//			catch(e) {
+//				console.log("parse error in standardLabel.loadLabels: "+e+" ||| "+JSON.stringify(e));
+//			}
+//			
+//			console.log(j);
+//		}
+//	}
+//	xhr.send();
+//	return;
+	
+	
+	
+	
+	$.ajax({
+		url: url,
+		dataType: "text json",
+		error: function(jqXHR, textStatus, error){
+		 console.log("Failed to get labels from "
+								 +url
+								 +" status: "
+								 +textStatus
+								 +" error: "
+								 +error);
+		},
+		success: function(data, textStatus, jqXHR){
+		 console.log("Labels loaded from "
+								 +url
+								 +" status: "
+								 +textStatus);
+			
+			if(typeof data != "object") {
+				console.log("unknown data type in standardLabel.loadLabels");
+				return;
+			}
+
+
+			standardLabelSource.labels = data;
+			standardLabel.convertRedirectRx();
+
+			
+			if(callback && typeof callback == "function") 
+			  callback();
+			else
+			  return;
 		}
+	});			 
+};
+standardLabel.convertRedirectRx = function(labels) {
+  // for the label types that have a redirectRX
+	// convert all their labels' redirectRX to a RegEx
+	
+	if(!labels) { // treat the labels as a heterogeneous source
+		for(type in standardLabelSource.labels) {
+			switch(type) {
+				case "google_search" : // they don't have a redirectRX
+					break;
+				case "facebook" : // 
+				  standardLabel.convertRedirectRx(standardLabelSource.labels[type]); // call ourselves to do the real work
+					break;
+				default:
+				  console.log("Unknown type in standardLabel.convertRedirectRx = function(labels) ");
+			}
+		}
+	} else { // we have a set of labels of the same type (all with redirectRX)
+	  // first, pre-process all regex fields
+			for(i=0;i<labels.length;i++) {
+				if(labels[i].redirectRx) {
+					labels[i].redirectRx = new RegExp(labels[i].redirectRx,"i");
+				}
+			}
 	}
 };
 
@@ -527,6 +308,11 @@ standardLabelTester.urlInterceptTest = function() {
 //		}]
 
 		console.log("testing url intercepts");
+		if(!standardLabelSource.urlIntercepts) {
+			console.log("no intercepts to test");
+			return false;
+		}
+		
 		var success = true;
 		var intercept,test,extraction,i,j,match;
 		for(i = 0; i<standardLabelSource.urlIntercepts.length; i++) { // run through all the intercepts
@@ -568,50 +354,26 @@ standardLabelTester.urlInterceptTest = function() {
 }
 
 standardLabelTester.labelTest = function() {
-		
-	// We run every label hit test.
 	
-//	standardLabelSource.labels = {
-//	"facebook" : [{
-//  	"name": "Guardian Facebook App",
-//  	"id": "facebook_guardian",
-//  	"redirectRx": /^http:\/\/apps\.facebook\.com%\/theguardian/,
-//  	"tests": [{
-//  				      name: "Guardian Facebook App redirect",
-//  							data : //"http://apps.facebook.com/theguardian/authenticated/commentisfree/2012/jul/08/andy-murray-not-miserable-just-normal?fb_source=other_multiline&fb_action_types=news.reads",
-//  							isMatch : true
-//              }],
-//  	"labelData" : 
-//		{
-//      requested_data:[
+	// this should test against the schema.
+	// but we don't yet.
+	// for Facebook, we actually have to check the regexes for the redirect test
 
-		// NOTE: Eventually this should test the label data itself against a standard.
-
-		console.log("testing label regexs");
-		var success = true;
-		for(i in standardLabelSource.labels) { // run through all the handlers
-
-			// I really don't know if these are going to be different for different handlers
-			// but they might be
-  		switch(i) {
-  			case "facebook":
-  				success = standardLabel.testFacebookLabels(standardLabelSource.labels[i]) && success;
-  				break;
-			case "google_search":
-				success = standardLabel.testDefaultLabel(standardLabelSource.labels[i]) && success;
-				break;
-  			default:
-  				console.log("Unknown label handler in standardLabelSource.labels");
-  				success = false;
-  		}			
-		}
-
+	var success = true;
+	
+	if(success) {
+		success = standardLabel.testFacebookLabels(standardLabelSource.labels['facebook']);
 		if(!success) 
-			console.log("************************\nLabel tests FAILED!\n************************");
+			console.log("************************\nFacebook Label tests FAILED!\n************************");
 		else
 			console.log("Label tests passed.");
+	}
+	if(!success) 
+		console.log("************************\nLabel tests FAILED!\n************************");
+	else
+		console.log("Label tests passed.");
 
-		return success;
+	return success;
 }
 
 
@@ -663,8 +425,16 @@ standardLabelTester.test = function() {
 
 };
 
-standardLabelTester.test();
 
+standardLabel.start = function() {
+	// set up test run (set to null to skip tests);
+  standardLabel.test = standardLabelTester.test;
+
+  // load assets
+	standardLabel.loadIntercepts(function(){
+		standardLabel.loadLabels(standardLabel.test);
+		}); // nested callbacks assure we load both intercepts and labels before we  run our tests
+}();
 
 chrome.tabs.onUpdated.addListener(standardLabel.tabUpdate);
 //chrome.tabs.onUpdated.addListener(standardLabel.tabActivate);
