@@ -6,7 +6,7 @@ The most interesting (and functional) code on here is the addon, in the addon di
 
 You'll have to download it and install it from developer mode in Chrome. Just point chrome to the plugin directory and it should just work.
 
-Note, however, it will only actually work on the Facebook Guardian App permissions page. There is also a FB test page included, which has its own instructions on how to make it work in the page itself (addon/test.FB.OAuth.htm).
+Note, however, it will only actually work on Google Search and the Facebook Guardian App permissions page. 
  
 This repo is about developing code publicly rather than shipping early. 
 
